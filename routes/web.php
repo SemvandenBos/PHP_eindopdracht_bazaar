@@ -17,4 +17,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/register-advertiser', function(){
+    return view('register-advertiser/edit');
+})->middleware('auth')->name('register-advertiser');
+
+Route::patch('/profile.update-advertiser', [ProfileController::class, 'updateAdvertiser'])->middleware('auth')->name('profile.update-advertiser');
+
+// Route::patch('/profile.update-advertiser', function(){
+//     dd('Post request updated');
+    
+// })->middleware('auth')->name('/profile.update-advertiser');
+
 require __DIR__.'/auth.php';

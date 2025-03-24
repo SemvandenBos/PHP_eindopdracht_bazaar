@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->enum('user_type', ['customer', 'private', 'comercial'])->default('customer');
+            $table->enum('user_type', ['customer', 'private', 'commercial'])->default('customer');
             $table->timestamps();
         });
 

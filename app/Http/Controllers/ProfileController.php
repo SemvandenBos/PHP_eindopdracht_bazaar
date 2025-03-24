@@ -65,6 +65,11 @@ class ProfileController extends Controller
         ]);
 
         $user = auth()->user();
+
+        if ($user->user_type !== 'customer'){
+            return Redirect::route('profile.edit')->with('status', 'Your profile is already registered as an advertiser. No changes were made.');;
+        }
+
         $user->user_type = $request->input('user_type');
         $user->save();
 

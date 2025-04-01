@@ -10,4 +10,9 @@ class RentalProduct extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'price_per_day'];
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'owner_id');
+    }
 }

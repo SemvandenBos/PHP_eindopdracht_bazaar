@@ -5,10 +5,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RentalProductController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\RoleMiddleware;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -42,5 +43,15 @@ Route::resource('rentalProduct', RentalProductController::class)->names([
 Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 
 Route::patch('/profile.update-advertiser', [ProfileController::class, 'updateAdvertiser'])->middleware('auth')->name('profile.update-advertiser');
+
+Route::middleware(['auth'])->group(function () {
+    // Route::get('/dashboard', function () {
+    //     return view(view: 'dashboard');
+    // })->name('dashboard');
+
+    // Route::get('/personal-advertiser', function () {
+    //     return "Personal Advertiser Dashboard";
+    // })->middleware(RoleMiddleware::class . ':personal_advertiser');
+});
 
 require __DIR__.'/auth.php';

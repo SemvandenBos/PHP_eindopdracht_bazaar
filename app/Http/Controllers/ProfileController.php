@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -68,6 +69,19 @@ class ProfileController extends Controller
 
         if ($user->user_type !== 'customer'){
             return Redirect::route('profile.edit')->with('status', 'Your profile is already registered as an advertiser. No changes were made.');;
+        }
+
+        switch ($request->input('user_type')) {
+            case 'private':
+                $user->role = User::ROLE_PERSONAL_ADVERTISER;
+                break;
+
+            case 'commercial':
+                $user->role = User::ROLE_BUSINESS_ADVERTISER;
+                break;
+            default:
+                $user->role = User::ROLE_USER;
+                break;
         }
 
         $user->user_type = $request->input('user_type');

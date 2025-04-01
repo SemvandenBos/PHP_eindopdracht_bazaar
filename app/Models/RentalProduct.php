@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class RentalProduct extends Model
 {
@@ -17,7 +18,14 @@ class RentalProduct extends Model
     }
 
     public function orders()
-{
-    return $this->hasMany(Order::class);
-}
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function available(): bool
+    {
+        return !$this->orders()
+            ->whereNull('return_due_at')
+            ->exists();
+    }
 }

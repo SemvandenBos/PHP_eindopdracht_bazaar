@@ -1,8 +1,10 @@
 <x-app-layout>
     <div class="max-w-sm mx-auto">
         <x-card title="{{ $product->name }}" description="€{{ $product->price_per_day }} per day">
-            <p>{{ $product->owner->name }}</p>
-            <x-button-link href="/rentalProduct/{{ $product->id }}">More Info</x-button-link>
+            <div class="flex justify-between">
+                <p>{{ $product->owner->name }}</p>
+                <x-availability-sign :available="$product->available()" />
+            </div>
         </x-card>
 
         {{-- Niet voor iedereen ofc --}}

@@ -16,6 +16,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 Route::get('set-locale/{locale}', function ($locale) {
     if (in_array($locale, ['en', 'nl'])) {
         App::setLocale($locale);
@@ -25,7 +26,7 @@ Route::get('set-locale/{locale}', function ($locale) {
 })->name('locale.setting');
 
 Route::get('/register-advertiser', function(){
-    return view('register-advertiser/edit');
+    return view('register-advertiser.edit');
 })->middleware('auth')->name('register-advertiser');
 
 Route::patch('/profile.update-advertiser', [ProfileController::class, 'updateAdvertiser'])->middleware('auth')->name('profile.update-advertiser');

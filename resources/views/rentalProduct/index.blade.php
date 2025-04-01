@@ -1,12 +1,9 @@
 <x-app-layout>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 m-3">
+    <x-card-list :items="$rentalProducts">
         @foreach ($rentalProducts as $product)
-        <x-card title="{{ $product->name }}" description="{{ $product->price_per_day }}">
-            <x-button-link href="/rentalProduct/{{ $product->id }}">More Info</x-button-link>
-        </x-card>
+            <x-card title="{{ $product->name }}" description="{{ $product->price_per_day }}">
+                <x-button-link href="/rentalProduct/{{ $product->id }}">More Info</x-button-link>
+            </x-card>
         @endforeach
-    </div>
-    <div>
-        {{ $rentalProducts->links() }}
-    </div>
+    </x-card-list>
 </x-app-layout>

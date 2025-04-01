@@ -52,6 +52,11 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('/personal-advertiser', function () {
     //     return "Personal Advertiser Dashboard";
     // })->middleware(RoleMiddleware::class . ':personal_advertiser');
+    // })->name('dashboard');
+
+    Route::get('/', function () {
+        return "welcome";
+    })->middleware(RoleMiddleware::class . ':personal_advertiser');
 });
 
 require __DIR__.'/auth.php';

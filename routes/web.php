@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RoleMiddleware;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -53,10 +53,6 @@ Route::middleware(['auth'])->group(function () {
     //     return "Personal Advertiser Dashboard";
     // })->middleware(RoleMiddleware::class . ':personal_advertiser');
     // })->name('dashboard');
-
-    Route::get('/', function () {
-        return "welcome";
-    })->middleware(RoleMiddleware::class . ':personal_advertiser');
 });
 
 require __DIR__.'/auth.php';

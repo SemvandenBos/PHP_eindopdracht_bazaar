@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RentalProductController;
 use Illuminate\Support\Facades\App;
@@ -38,6 +38,8 @@ Route::resource('rentalProduct', RentalProductController::class)->names([
     'store' => 'rentalProduct.store',
     'show' => 'rentalProduct.show',
 ]);
+
+Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 
 Route::patch('/profile.update-advertiser', [ProfileController::class, 'updateAdvertiser'])->middleware('auth')->name('profile.update-advertiser');
 

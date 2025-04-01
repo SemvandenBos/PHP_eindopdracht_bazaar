@@ -5,17 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\RentalProduct;
 
+
 class RentalProductController extends Controller
 {
     public function index()
     {
-        $rentalProducts = RentalProduct::paginate(5);
+        $rentalProducts = RentalProduct::with('owner')->paginate(5);
         return view('rentalProduct.index', ['rentalProducts' => $rentalProducts]);
     }
 
     public function show($id)
     {
-        $product = RentalProduct::findOrFail($id);
+        $product = RentalProduct::with('orders')->findOrFail($id);
         return view('rentalProduct.show', ['product' => $product]);
     }
 

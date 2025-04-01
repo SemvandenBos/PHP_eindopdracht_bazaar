@@ -15,4 +15,9 @@ class RentalProduct extends Model
     {
         return $this->belongsTo(User::class, 'owner_id');
     }
+
+    public function orders()
+{
+    return $this->hasMany(Order::class);
+}
 }

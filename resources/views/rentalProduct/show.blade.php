@@ -1,12 +1,26 @@
 <x-app-layout>
-    <div class="bg-white shadow-md rounded-lg p-6 max-w-sm mx-auto">
-        <h2 class="text-xl font-semibold text-gray-800">{{ $product->name }}</h2>
-        <p class="text-gray-600 mt-2">{{ $product->price_per_day }}</p>
-        <div class="mt-4">
-            <x-button-link href="/rentalProduct/{{ $product->id }}">
-                {{-- {{__('rentalProduct.buttonText')}} --}}
-                more info
-            </x-button-link>
+    <div class="max-w-sm mx-auto">
+        <x-card title="{{ $product->name }}" description="€{{ $product->price_per_day }} per day">
+            <p>{{ $product->owner->name }}</p>
+            <x-button-link href="/rentalProduct/{{ $product->id }}">More Info</x-button-link>
+        </x-card>
+
+        {{-- Niet voor iedereen ofc --}}
+        <div class="flex flex-col gap-2 my-5">
+            @foreach ($product->orders as $order)
+                <div class="bg-white shadow-md rounded-lg p-2">
+                    {{ $order->user->name }} rented at {{ $order->rented_at }}
+                </div>
+            @endforeach
         </div>
+
+
+        <form method="POST" action="{{ route('order.store') }}">
+            @csrf
+            <input type="hidden" name="product_id" value="{{ $product->id }}">
+            <x-primary-button>
+                Rent
+            </x-primary-button>
+        </form>
     </div>
 </x-app-layout>

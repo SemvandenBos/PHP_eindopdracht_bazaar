@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rental_product_user', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('rental_product_id')->constrained()->onDelete('cascade');
             $table->date('rented_at');
-            $table->date('return_due_at');
+            $table->date('return_due_at')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rental_product_user');
+        Schema::dropIfExists('orders');
     }
 };

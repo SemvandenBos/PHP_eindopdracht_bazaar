@@ -2,10 +2,11 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\RoleMiddleware;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -30,5 +31,15 @@ Route::get('/register-advertiser', function(){
 })->middleware('auth')->name('register-advertiser');
 
 Route::patch('/profile.update-advertiser', [ProfileController::class, 'updateAdvertiser'])->middleware('auth')->name('profile.update-advertiser');
+
+Route::middleware(['auth'])->group(function () {
+    // Route::get('/dashboard', function () {
+    //     return view(view: 'dashboard');
+    // })->name('dashboard');
+
+    // Route::get('/personal-advertiser', function () {
+    //     return "Personal Advertiser Dashboard";
+    // })->middleware(RoleMiddleware::class . ':personal_advertiser');
+});
 
 require __DIR__.'/auth.php';

@@ -9,7 +9,7 @@ class RentalProductController extends Controller
 {
     public function index()
     {
-        $rentalProducts = RentalProduct::all();
+        $rentalProducts = RentalProduct::paginate(5);
         return view('rentalProduct.index', ['rentalProducts' => $rentalProducts]);
     }
 

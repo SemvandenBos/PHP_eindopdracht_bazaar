@@ -17,7 +17,8 @@ class RentalProductFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->name(),
+            'price_per_day' => fake()->numberBetween(10, 100),
         ];
     }
 }

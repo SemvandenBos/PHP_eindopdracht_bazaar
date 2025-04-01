@@ -17,4 +17,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('set-locale/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'nl'])) {
+        App::setLocale($locale);
+        session()->put('locale', $locale);
+    }
+    return redirect()->back();
+})->name('locale.setting');
+
+Route::get('/register-advertiser', function(){
+    return view('register-advertiser.edit');
+})->middleware('auth')->name('register-advertiser');
+
+Route::patch('/profile.update-advertiser', [ProfileController::class, 'updateAdvertiser'])->middleware('auth')->name('profile.update-advertiser');
+
 require __DIR__.'/auth.php';

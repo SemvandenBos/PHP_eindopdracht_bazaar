@@ -57,4 +57,22 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function updateAdvertiser(Request $request)
+    {
+        $request->validate([
+            'user_type' => 'required|in:private,commercial',
+        ]);
+
+        $user = auth()->user();
+
+        if ($user->user_type !== 'customer'){
+            return Redirect::route('profile.edit')->with('status', 'Your profile is already registered as an advertiser. No changes were made.');;
+        }
+
+        $user->user_type = $request->input('user_type');
+        $user->save();
+
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
 }

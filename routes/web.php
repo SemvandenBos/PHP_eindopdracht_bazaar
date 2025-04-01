@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RentalProductController;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RoleMiddleware;
 
@@ -29,6 +32,15 @@ Route::get('set-locale/{locale}', function ($locale) {
 Route::get('/register-advertiser', function(){
     return view('register-advertiser.edit');
 })->middleware('auth')->name('register-advertiser');
+
+Route::resource('rentalProduct', RentalProductController::class)->names([
+    'index' => 'rentalProduct.index',
+    'create' => 'rentalProduct.create',
+    'store' => 'rentalProduct.store',
+    'show' => 'rentalProduct.show',
+]);
+
+Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 
 Route::patch('/profile.update-advertiser', [ProfileController::class, 'updateAdvertiser'])->middleware('auth')->name('profile.update-advertiser');
 

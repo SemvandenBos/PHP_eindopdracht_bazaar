@@ -66,4 +66,9 @@ class User extends Authenticatable
     {
         return $this->role === self::ROLE_PERSONAL_ADVERTISER;
     }
+    
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

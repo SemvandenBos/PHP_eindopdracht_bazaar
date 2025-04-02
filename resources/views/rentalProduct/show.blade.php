@@ -1,22 +1,14 @@
 <x-app-layout>
     <div class="max-w-sm mx-auto mt-5">
-        <x-card title="{{ $product->name }}" description="€{{ $product->price_per_day }} per day">
+        <x-card title="{{ $product->name }}">
+            <p>€{{ $product->price_per_day }} per day</p>
             <div class="flex justify-between">
-                <p>{{ $product->owner->name }}</p>
                 <x-availability-sign :available="$product->available()" />
                 ★{{ $product->reviewScore() }}
             </div>
+            <a href="/todo" class="underline text-blue-600 hover:text-blue-800">supplier:
+                {{ $product->owner->name }}</a>
         </x-card>
-
-        @can('manageUsers')
-            <div class="flex flex-col gap-2 mt-5">
-                @foreach ($product->orders as $order)
-                    <div class="bg-white shadow-md rounded-lg p-2">
-                        {{ $order->user->name }} rented at {{ $order->rented_at }}
-                    </div>
-                @endforeach
-            </div>
-        @endcan
 
         <div class="flex justify-between my-2">
             <form method="POST" action="{{ route('order.toggleFavourite') }}">
@@ -37,6 +29,16 @@
                 </x-primary-button>
             </form>
         </div>
+
+        @can('manageUsers')
+            <div class="flex flex-col gap-2 mt-5">
+                @foreach ($product->orders as $order)
+                    <div class="bg-white shadow-md rounded-lg p-2">
+                        {{ $order->user->name }} rented at {{ $order->rented_at }}
+                    </div>
+                @endforeach
+            </div>
+        @endcan
 
         <form method="POST" action="{{ route('order.storeReview') }}" class="my-5">
             @csrf

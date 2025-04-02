@@ -18,9 +18,18 @@ class RentalProductController extends Controller
     public function show($id)
     {
         $product = RentalProduct::with('orders')->findOrFail($id);
-        $reviews = RentalProductReview::where('rental_product_id', $product->id)
-            ->latest()
-            ->paginate(1);
+
+        $sort = request()->query('sort', 'newest');
+
+        $query = RentalProductReview::where('rental_product_id', $product->id);
+
+        if ($sort === 'oldest') {
+            $query->orderBy('created_at', 'asc');
+        } 
+        else {
+            $query->orderBy('created_at', 'desc');
+        }
+        $reviews = $query->paginate(1)->appends(['sort' => $sort]); //TODO paginate 1 voor tests nog
 
         return view('rentalProduct.show', compact('product', 'reviews'));
     }

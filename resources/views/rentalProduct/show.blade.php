@@ -13,7 +13,7 @@
                     <div class="bg-white shadow-md rounded-lg p-2">
                         {{ $order->user->name }} rented at {{ $order->rented_at }}
                     </div>
-                @endforeach
+                @endforeach 
             </div>
         @endcan
 

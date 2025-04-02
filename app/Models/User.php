@@ -4,8 +4,10 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+
 
 class User extends Authenticatable
 {
@@ -66,9 +68,29 @@ class User extends Authenticatable
     {
         return $this->role === self::ROLE_PERSONAL_ADVERTISER;
     }
-    
+
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(RentalProductReview::class);
+    }
+
+    public function favourites(): BelongsToMany
+    {
+        return $this->belongsToMany(RentalProduct::class, 'favourite');
+    }
+
+    public function toggleFavourite(RentalProduct $product): void
+    {
+        $this->favourites()->toggle($product->id);
+    }
+
+    public function hasFavourite(RentalProduct $product): bool
+    {
+        return $this->favourites()->where('rental_product_id', $product->id)->exists();
     }
 }

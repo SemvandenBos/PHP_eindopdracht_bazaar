@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\RentalProduct;
+use App\Models\RentalProductReview;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,9 +18,15 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'password' => 'asdfasdf',
         ]);
-        User::factory(5)->create();
+        
 
-        RentalProduct::factory(20)->create();
+        User::factory(10)->create();
+        RentalProduct::factory(10)->create();
+    
+        $this->call([
+            RentalProductReviewSeeder::class
+        ]);
     }
 }

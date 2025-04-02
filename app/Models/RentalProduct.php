@@ -22,6 +22,11 @@ class RentalProduct extends Model
         return $this->hasMany(Order::class);
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(RentalProductReview::class);
+    }
+
     public function available(): bool
     {
         return !$this->orders()

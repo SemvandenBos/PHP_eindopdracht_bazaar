@@ -41,6 +41,7 @@ Route::resource('rentalProduct', RentalProductController::class)->names([
 ]);
 
 Route::post('/order', [OrderController::class, 'store'])->name('order.store');
+Route::post('/orderReview', [OrderController::class, 'storeReview'])->name('order.storeReview');
 
 Route::patch('/profile.update-advertiser', [ProfileController::class, 'updateAdvertiser'])->middleware('auth')->name('profile.update-advertiser');
 

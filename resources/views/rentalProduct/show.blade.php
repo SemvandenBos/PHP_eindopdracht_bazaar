@@ -16,6 +16,28 @@
             @endforeach
         </div>
 
+        {{-- Reviews: TODO lijst van maken met sortering!! --}}
+        <div class="flex flex-col gap-2 my-5">
+            <h2 class="md:text-2xl font-bold">Reviews</h2>
+            @foreach ($product->reviews as $review)
+                <div class="bg-white shadow-md rounded-lg p-2">
+                    <h3 class="font-bold">{{ $review->reviewer->name }}</h3>
+                    <p>{{ $review->review_text }}</p>
+                </div>
+            @endforeach
+        </div>
+
+        <form method="POST" action="{{ route('order.storeReview') }}">
+            @csrf
+            <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+            <x-input-label for="review_text" :value="__('Review product')" />
+            <x-text-input id="review_text" name="review_text" :value="old('review_text')" placeholder="review here" />
+            <x-input-error :messages="$errors->get('review_text')" class="mt-2" />
+            <x-primary-button>
+                Post review
+            </x-primary-button>
+        </form>
 
         <form method="POST" action="{{ route('order.store') }}">
             @csrf

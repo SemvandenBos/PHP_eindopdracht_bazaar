@@ -29,20 +29,11 @@ Route::get('set-locale/{locale}', function ($locale) {
     return redirect()->back();
 })->name('locale.setting');
 
-Route::get('/register-advertiser', function(){
+Route::get('/register-advertiser', function () {
     return view('register-advertiser.edit');
 })->middleware('auth')->name('register-advertiser');
 
-Route::resource('rentalProduct', RentalProductController::class)->names([
-    'index' => 'rentalProduct.index',
-    'create' => 'rentalProduct.create',
-    'store' => 'rentalProduct.store',
-    'show' => 'rentalProduct.show',
-]);
 
-Route::post('/order', [OrderController::class, 'store'])->name('order.store');
-Route::post('/orderReview', [OrderController::class, 'storeReview'])->name('order.storeReview');
-Route::post('/toggleFavourite', [OrderController::class, 'toggleFavourite'])->name('order.toggleFavourite');
 
 Route::patch('/profile.update-advertiser', [ProfileController::class, 'updateAdvertiser'])->middleware('auth')->name('profile.update-advertiser');
 
@@ -55,6 +46,17 @@ Route::middleware(['auth'])->group(function () {
     //     return "Personal Advertiser Dashboard";
     // })->middleware(RoleMiddleware::class . ':personal_advertiser');
     // })->name('dashboard');
+
+    //Rental products
+    Route::resource('rentalProduct', RentalProductController::class)->names([
+        'index' => 'rentalProduct.index',
+        'create' => 'rentalProduct.create',
+        'store' => 'rentalProduct.store',
+        'show' => 'rentalProduct.show',
+    ]);
+    Route::post('/order', [OrderController::class, 'store'])->name('order.store');
+    Route::post('/orderReview', [OrderController::class, 'storeReview'])->name('order.storeReview');
+    Route::post('/toggleFavourite', [OrderController::class, 'toggleFavourite'])->name('order.toggleFavourite');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -24,12 +24,15 @@ class RentalProductController extends Controller
         $query = RentalProductReview::where('rental_product_id', $product->id);
 
         if ($sort === 'oldest') {
-            $query->orderBy('created_at', 'asc');
-        } 
-        else {
             $query->orderBy('created_at', 'desc');
+        } elseif ($sort === 'highest_rating') {
+            $query->orderBy('review_score', 'desc');
+        } elseif ($sort === 'lowest_rating') {
+            $query->orderBy('review_score', 'asc');
+        } else {
+            $query->orderBy('created_at', 'asc'); // Default: Newest first
         }
-        $reviews = $query->paginate(1)->appends(['sort' => $sort]); //TODO paginate 1 voor tests nog
+        $reviews = $query->paginate(2)->appends(['sort' => $sort]); //TODO paginate 1 voor tests nog
 
         return view('rentalProduct.show', compact('product', 'reviews'));
     }

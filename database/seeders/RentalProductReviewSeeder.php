@@ -17,20 +17,23 @@ class RentalProductReviewSeeder extends Seeder
     {
         $users = User::all();
         $products = RentalProduct::all();
-    
+
         $reviewPairs = [];
-    
+
         foreach ($users as $user) {
-            foreach ($products->random(rand(1, 3)) as $product) {
+            foreach ($products->random(rand(3, 7)) as $product) {
                 $key = "{$user->id}-{$product->id}";
-    
+
                 //Force uniqueness of reviews
                 if (!isset($reviewPairs[$key])) {
                     $reviewPairs[$key] = true;
-    
+
+                    $time = now()->subDays(rand(1, 60));
                     RentalProductReview::factory()->create([
                         'reviewer_id' => $user->id,
                         'rental_product_id' => $product->id,
+                        'created_at' => $time,
+                        'updated_at' => $time,
                     ]);
                 }
             }

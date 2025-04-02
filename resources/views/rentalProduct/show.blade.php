@@ -18,13 +18,25 @@
             </div>
         @endcan
 
-        <form method="POST" action="{{ route('order.store') }}">
-            @csrf
-            <input type="hidden" name="product_id" value="{{ $product->id }}">
-            <x-primary-button>
-                Rent
-            </x-primary-button>
-        </form>
+        <div class="flex justify-between my-2">
+            <form method="POST" action="{{ route('order.toggleFavourite') }}">
+                @csrf
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                <x-favourite-button :isActive="Auth::user()->hasFavourite($product)">
+                    ★ favourite
+                </x-favourite-button>
+
+            </form>
+
+            <form method="POST" action="{{ route('order.store') }}">
+                @csrf
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+                <x-primary-button>
+                    Rent
+                </x-primary-button>
+            </form>
+        </div>
 
         <form method="POST" action="{{ route('order.storeReview') }}" class="my-5">
             @csrf

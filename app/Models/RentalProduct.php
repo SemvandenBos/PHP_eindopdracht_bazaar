@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
@@ -37,5 +38,10 @@ class RentalProduct extends Model
     public function reviewScore(): float
     {
         return round($this->reviews()->avg('review_score') ?? 0, 1);
+    }
+
+    public function favouritedBy(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'favourite');
     }
 }

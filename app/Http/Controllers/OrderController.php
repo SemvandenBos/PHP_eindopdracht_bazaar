@@ -69,4 +69,18 @@ class OrderController extends Controller
 
         return redirect()->back()->with('success', 'Product rented successfully!');
     }
+
+    public function toggleFavourite(Request $request)
+    {
+        $validated = $request->validate([
+            'product_id' => 'required|exists:rental_products,id',
+        ]);
+        
+        $product = RentalProduct::find($validated['product_id']);
+
+        $user = Auth::user();
+        $user->toggleFavourite($product);
+
+        return redirect()->back()->with('success', 'Favourite status updated!');
+    }
 }

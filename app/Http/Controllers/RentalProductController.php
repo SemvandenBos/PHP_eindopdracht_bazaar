@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\RentalProduct;
+use App\Models\RentalProductReview;
 
 
 class RentalProductController extends Controller
@@ -17,7 +18,11 @@ class RentalProductController extends Controller
     public function show($id)
     {
         $product = RentalProduct::with('orders')->findOrFail($id);
-        return view('rentalProduct.show', ['product' => $product]);
+        $reviews = RentalProductReview::where('rental_product_id', $product->id)
+            ->latest()
+            ->paginate(1);
+
+        return view('rentalProduct.show', compact('product', 'reviews'));
     }
 
     public function create()

@@ -1,10 +1,10 @@
 <div class="bg-white shadow-md rounded-lg p-6">
     @isset($title)
-        <h2 class="text-xl font-semibold text-gray-800">{{ $title }}</h2>
+        <h2 class="text-xl font-semibold">{{ $title }}</h2>
     @endisset
 
     @isset($description)
-        <p class="text-gray-600 mt-2">{{ $description }}</p>
+        <p class="mt-2">{{ $description }}</p>
     @endisset
 
     <div class="mt-4">

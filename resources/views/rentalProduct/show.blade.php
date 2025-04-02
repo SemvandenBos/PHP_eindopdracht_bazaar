@@ -1,12 +1,12 @@
 <x-app-layout>
     <div class="max-w-sm mx-auto mt-5">
         <x-card title="{{ $product->name }}">
-            <p>€{{ $product->price_per_day }} per day</p>
+            <p>€{{ $product->price_per_day }} {{ __('rentalProduct.perDay') }}</p>
             <div class="flex justify-between">
                 <x-availability-sign :available="$product->available()" />
                 ★{{ $product->reviewScore() }}
             </div>
-            <a href="/todo" class="underline text-blue-600 hover:text-blue-800">supplier:
+            <a href="/todo" class="underline text-blue-600 hover:text-blue-800">{{ __('rentalProduct.supplier') }}:
                 {{ $product->owner->name }}</a>
         </x-card>
 
@@ -15,7 +15,7 @@
                 @csrf
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                 <x-favourite-button :isActive="Auth::user()->hasFavourite($product)">
-                    ★ favourite
+                    ★ {{ __('rentalProduct.favourite') }}
                 </x-favourite-button>
 
             </form>
@@ -25,7 +25,7 @@
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
 
                 <x-primary-button>
-                    Rent
+                    {{ __('rentalProduct.rent') }}
                 </x-primary-button>
             </form>
         </div>
@@ -34,7 +34,7 @@
             <div class="flex flex-col gap-2 mt-5">
                 @foreach ($product->orders as $order)
                     <div class="bg-white shadow-md rounded-lg p-2">
-                        {{ $order->user->name }} rented at {{ $order->rented_at }}
+                        {{ $order->user->name }} {{ __('rentalProduct.rentedAt') }} {{ $order->rented_at }}
                     </div>
                 @endforeach
             </div>
@@ -42,25 +42,26 @@
 
         <form method="POST" action="{{ route('order.storeReview') }}" class="my-5">
             @csrf
-            <h2 class="md:text-2xl font-bold">Leave review</h2>
+            <h2 class="md:text-2xl font-bold">{{ __('review.leaveReview') }}</h2>
             <input type="hidden" name="product_id" value="{{ $product->id }}">
 
             {{-- review text --}}
             <div>
-                <x-input-label for="review_text" :value="__('Review:    ')" />
-                <x-text-input id="review_text" name="review_text" :value="old('review_text')" placeholder="review here" />
+                <x-input-label for="review_text" :value="__('review.review')" />
+                <x-text-input id="review_text" name="review_text" :value="old('review_text')"
+                    placeholder="{{ __('review.reviewPlaceholder') }}" />
                 <x-input-error :messages="$errors->get('review_text')" class="mt-2" />
             </div>
 
             {{-- review score --}}
             <div>
-                <x-input-label for="review_score" :value="__('Score:')" />
+                <x-input-label for="review_score" :value="__('review.score')" />
                 <x-number-input name="score" min="1" max="5" step="0.5" class="w-24" />
                 <x-input-error :messages="$errors->get('review_score')" class="mt-2" />
             </div>
 
             <x-primary-button>
-                Post review
+                {{ __('review.postReview') }}
             </x-primary-button>
         </form>
 

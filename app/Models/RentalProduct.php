@@ -33,4 +33,9 @@ class RentalProduct extends Model
             ->whereNull('return_due_at')
             ->exists();
     }
+
+    public function reviewScore(): float
+    {
+        return round($this->reviews()->avg('review_score') ?? 0, 1);
+    }
 }

@@ -17,8 +17,9 @@ return new class extends Migration
         Schema::create('rental_product_reviews', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class, 'reviewer_id')->constrained();
-            $table->foreignIdFor(RentalProduct::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(RentalProduct::class, 'rental_product_id')->constrained()->onDelete('cascade');
             $table->string('review_text')->nullable(false);
+            $table->float('review_score')->nullable(false);
             $table->timestamps();
 
             $table->unique(['reviewer_id', 'rental_product_id']);

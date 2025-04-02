@@ -37,24 +37,34 @@ class OrderController extends Controller
     {
         $validated = $request->validate([
             'product_id' => 'required|exists:rental_products,id',
-            'review_text' => 'required'
-
+            'review_text' => 'required',
+            'review_score' => [
+                'required',
+                'numeric',
+                'between:1,5',
+                function ($attribute, $value, $fail) {
+                    if (fmod($value * 2, 1) !== 0.0) {
+                        $fail('The ' . $attribute . ' must be in increments of 0.5.');
+                    }
+                },
+            ],
         ]);
-        
+
         $user = Auth::user();
 
         $existingReview = RentalProductReview::where('reviewer_id', $user->id)
-        ->where('rental_product_id', $validated['product_id'])
-        ->exists(); // `exists()` returns true if a record is found
+            ->where('rental_product_id', $validated['product_id'])
+            ->exists(); // `exists()` returns true if a record is found
 
-    if ($existingReview) {
-        return redirect()->back()->with('error', 'You have already reviewed this product.');
-    }
+        if ($existingReview) {
+            return redirect()->back()->with('error', 'You have already reviewed this product.');
+        }
 
         RentalProductReview::create([
             'reviewer_id' => $user->id,
             'rental_product_id' => $validated['product_id'],
             'review_text' => $validated['review_text'],
+            'review_score' => $validated['review_score'],
         ]);
 
         return redirect()->back()->with('success', 'Product rented successfully!');

@@ -10,7 +10,7 @@ class RentalProductReview extends Model
     /** @use HasFactory<\Database\Factories\RentalProductReviewFactory> */
     use HasFactory;
 
-    protected $fillable = ['reviewer_id', 'rental_product_id', 'review_text'];
+    protected $fillable = ['reviewer_id', 'rental_product_id', 'review_text', 'review_score'];
 
 
     public function reviewer()

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Model;
@@ -28,11 +29,37 @@ class RentalProduct extends Model
         return $this->hasMany(RentalProductReview::class);
     }
 
-    public function available(): bool
+    public function availableTomorrow(): bool
     {
-        return !$this->orders()
-            ->whereNull('return_due_at')
+        $tomorrow = Carbon::tomorrow();
+        $exists = $this->orders()
+            ->whereDate('rent_start_date', '<=', $tomorrow)
+            ->whereDate('rent_end_date', '>=', $tomorrow)
             ->exists();
+
+        return !$exists;
+    }
+
+    public function available($startDate, $endDate)
+    {
+        // Convert start and end dates to Carbon instances
+        $startDate = Carbon::parse($startDate);
+        $endDate = Carbon::parse($endDate);
+
+        // Check if there are any overlapping rentals for the product
+        $overlappingRentals = $this->orders()
+            ->where(function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('rent_start_date', [$startDate, $endDate])
+                    ->orWhereBetween('rent_end_date', [$startDate, $endDate])
+                    ->orWhere(function ($q) use ($startDate, $endDate) {
+                        $q->where('rent_start_date', '<', $startDate)
+                            ->where('rent_end_date', '>', $endDate);
+                    });
+            })
+            ->exists();
+
+        // If there are any overlapping rentals, the product is not available
+        return !$overlappingRentals;
     }
 
     public function reviewScore(): float

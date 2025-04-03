@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\RentalProduct;
 use App\Models\RentalProductReview;
@@ -14,20 +15,34 @@ class OrderController extends Controller
     {
         $validated = $request->validate([
             'product_id' => 'required|exists:rental_products,id',
+
+            'rent_start_date' => [
+                'required',
+                'date',
+                'after_or_equal:' . Carbon::tomorrow()->toDateString(),
+                'before_or_equal:' . Carbon::now()->addDays(21)->toDateString(),
+            ],
+
+            'rent_end_date' => [
+                'required',
+                'date',
+                'after_or_equal:rent_start_date',
+                'before_or_equal:' . Carbon::parse($request->input('rent_start_date'))->addDays(6)->toDateString(),
+            ],
         ]);
 
         $user = Auth::user();
 
         $product = RentalProduct::findOrFail($validated['product_id']);
-        if (! $product->available()) {
+        if (! $product->available($validated['rent_start_date'], $validated['rent_end_date'])) {
             return redirect()->back()->with('error', 'This product is currently not available for rent.');
         }
 
         Order::create([
             'user_id' => $user->id,
             'rental_product_id' => $validated['product_id'],
-            'rented_at' => now()->toDateString(),
-            // 'return_due_at' => now()->addWeek()->toDateString(),
+            'rent_start_date' => $validated['rent_start_date'],
+            'rent_end_date' => $validated['rent_end_date'],
         ]);
 
         return redirect()->back()->with('success', 'Product rented successfully!');
@@ -54,7 +69,7 @@ class OrderController extends Controller
 
         $existingReview = RentalProductReview::where('reviewer_id', $user->id)
             ->where('rental_product_id', $validated['product_id'])
-            ->exists(); // `exists()` returns true if a record is found
+            ->exists();
 
         if ($existingReview) {
             return redirect()->back()->with('error', 'You have already reviewed this product.');
@@ -75,7 +90,7 @@ class OrderController extends Controller
         $validated = $request->validate([
             'product_id' => 'required|exists:rental_products,id',
         ]);
-        
+
         $product = RentalProduct::find($validated['product_id']);
 
         $user = Auth::user();

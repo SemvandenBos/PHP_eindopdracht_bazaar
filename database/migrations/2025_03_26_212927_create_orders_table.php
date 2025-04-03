@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('rental_product_id')->constrained()->onDelete('cascade');
-            $table->date('rented_at');
-            $table->date('return_due_at')->nullable();
+            $table->date('rent_start_date');
+            $table->date('rent_end_date');
             $table->timestamps();
         });
     }

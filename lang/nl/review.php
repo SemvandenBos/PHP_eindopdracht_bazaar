@@ -6,5 +6,6 @@ return [
     'review' => 'Beoordeling',
     'reviewPlaceholder' => 'Beoordeel hier',
     'score' => 'Score',
-    'postReview' => 'Beoordeling plaatsen'
+    'postReview' => 'Beoordeling plaatsen',
+    'anonymous' => 'Anoniem',
 ];

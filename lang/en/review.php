@@ -6,5 +6,6 @@ return [
     'review' => 'Review',
     'reviewPlaceholder' => 'Review here',
     'score' => 'Score',
-    'postReview' => 'Post review'
+    'postReview' => 'Post review',
+    'anonymous' => 'Anonymous',
 ];

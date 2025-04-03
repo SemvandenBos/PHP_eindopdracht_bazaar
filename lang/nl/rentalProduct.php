@@ -16,4 +16,7 @@ return [
     'favourite' => 'favoriet maken',
     'rent' => 'huren',
     'rentedAt' => 'gehuurt op',
+
+    'startDate' => 'Start datum',
+    'endDate' => 'Eind datum',
 ];

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\RentalProduct;
 use App\Models\RentalProductReview;
@@ -17,7 +18,11 @@ class RentalProductController extends Controller
 
     public function show($id)
     {
-        $product = RentalProduct::with('orders')->findOrFail($id);
+        $product = RentalProduct::with([
+            'orders' => function ($query) {
+                $query->where('rent_start_date', '>', Carbon::now());
+            }
+        ])->findOrFail($id);
 
         $sort = request()->query('sort', 'newest');
 

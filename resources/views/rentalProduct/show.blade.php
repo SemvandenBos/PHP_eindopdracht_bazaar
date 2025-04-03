@@ -10,20 +10,11 @@
                 {{ $product->owner->name }}</a>
         </x-card>
 
-        <div class="flex justify-between my-2">
-            <form method="POST" action="{{ route('order.toggleFavourite') }}">
-                @csrf
-                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                <x-favourite-button :isActive="Auth::user()->hasFavourite($product)">
-                    ★ {{ __('rentalProduct.favourite') }}
-                </x-favourite-button>
-
-            </form>
-        </div>
+        <x-favourite-button :productId='$product->id' :isActive="Auth::user()->hasFavourite($product)"></x-favourite-button>
 
         <form method="POST" action="{{ route('order.store') }}">
             @csrf
-            <h2 class="md:text-2xl font-bold">{{ __('rentalProduct.rent') }}</h2>
+            <x-title class="md:text-2xl font-bold">{{ __('rentalProduct.rent') }}</x-title>
             <input type="hidden" name="product_id" value="{{ $product->id }}" />
 
             {{-- start date --}}
@@ -46,20 +37,24 @@
             </x-primary-button>
         </form>
 
-        {{-- @can('manageUsers') --}}
+
         <div class="flex flex-col gap-2 mt-5">
+            <x-title>{{ __('rentalProduct.alreadyBookedDates') }}</x-title>
             @foreach ($product->orders as $order)
                 <div class="bg-white shadow-md rounded-lg p-2">
-                    {{ $order->user->name }} {{ __('rentalProduct.rentedAt') }} {{ $order->rent_start_date }} to
+                    @can('manageUsers')
+                        {{ $order->user->name }} {{ __('rentalProduct.rentedAt') }}
+                    @endcan
+                    {{ $order->rent_start_date }} to
                     {{ $order->rent_end_date }}
                 </div>
             @endforeach
         </div>
-        {{-- @endcan --}}
+
 
         <form method="POST" action="{{ route('order.storeReview') }}" class="my-5">
             @csrf
-            <h2 class="md:text-2xl font-bold">{{ __('review.leaveReview') }}</h2>
+            <x-title class="md:text-2xl font-bold">{{ __('review.leaveReview') }}</x-title>
             <input type="hidden" name="product_id" value="{{ $product->id }}">
 
             {{-- review text --}}

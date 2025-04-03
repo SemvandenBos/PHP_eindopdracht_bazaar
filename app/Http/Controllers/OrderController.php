@@ -57,11 +57,7 @@ class OrderController extends Controller
                 'required',
                 'numeric',
                 'between:1,5',
-                function ($attribute, $value, $fail) {
-                    if (fmod($value * 2, 1) !== 0.0) {
-                        $fail('The ' . $attribute . ' must be in increments of 0.5.');
-                    }
-                },
+                function () {}
             ],
         ]);
 

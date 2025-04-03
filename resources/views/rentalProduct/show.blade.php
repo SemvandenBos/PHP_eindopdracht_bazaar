@@ -68,7 +68,8 @@
             {{-- review score --}}
             <div>
                 <x-input-label for="review_score" :value="__('review.score')" />
-                <x-number-input name="score" min="1" max="5" step="0.5" class="w-24" />
+                <x-number-input name="review_score" min="1" max="5" step="0.1" class="w-24"
+                    :value="old('review_score')" />
                 <x-input-error :messages="$errors->get('review_score')" class="mt-2" />
             </div>
 

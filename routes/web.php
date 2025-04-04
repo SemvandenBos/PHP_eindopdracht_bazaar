@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FavouritesController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RentalProductController;
@@ -33,7 +34,7 @@ Route::get('/register-advertiser', function () {
     return view('register-advertiser.edit');
 })->middleware('auth')->name('register-advertiser');
 
-
+Route::get('/favourites', [FavouritesController::class, 'index'])->name('favourites');
 
 Route::patch('/profile.update-advertiser', [ProfileController::class, 'updateAdvertiser'])->middleware('auth')->name('profile.update-advertiser');
 
@@ -54,9 +55,11 @@ Route::middleware(['auth'])->group(function () {
         'store' => 'rentalProduct.store',
         'show' => 'rentalProduct.show',
     ]);
+
     Route::post('/order', [OrderController::class, 'store'])->name('order.store');
     Route::post('/orderReview', [OrderController::class, 'storeReview'])->name('order.storeReview');
     Route::post('/toggleFavourite', [OrderController::class, 'toggleFavourite'])->name('order.toggleFavourite');
 });
+
 
 require __DIR__ . '/auth.php';

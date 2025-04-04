@@ -10,10 +10,13 @@ return [
     'succesCreate' => 'Product added succesfully!',
     'moreInfo' => 'More info',
     'perDay' => 'per day',
-    'unavailable' => 'unavailable',
-    'available' => 'available',
+    'unavailable' => 'Unavailable tomorrow',
+    'available' => 'Available tomorrow',
     'supplier' => 'supplier',
     'favourite' => 'favourite',
     'rent' => 'rent',
     'rentedAt' => 'rented at',
+
+    'startDate' => 'Start date',
+    'endDate' => 'End date',
 ];

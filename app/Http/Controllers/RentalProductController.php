@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\RentalProduct;
 use App\Models\RentalProductReview;
@@ -17,22 +18,26 @@ class RentalProductController extends Controller
 
     public function show($id)
     {
-        $product = RentalProduct::with('orders')->findOrFail($id);
+        $product = RentalProduct::with([
+            'orders' => function ($query) {
+                $query->where('rent_start_date', '>=', Carbon::now());
+            }
+        ])->findOrFail($id);
 
         $sort = request()->query('sort', 'newest');
 
         $query = RentalProductReview::where('rental_product_id', $product->id);
 
         if ($sort === 'oldest') {
-            $query->orderBy('created_at', 'desc');
+            $query->orderBy('created_at', 'asc');
         } elseif ($sort === 'highest_rating') {
             $query->orderBy('review_score', 'desc');
         } elseif ($sort === 'lowest_rating') {
             $query->orderBy('review_score', 'asc');
         } else {
-            $query->orderBy('created_at', 'asc'); // Default: Newest first
+            $query->orderBy('created_at', 'desc');
         }
-        $reviews = $query->paginate(2)->appends(['sort' => $sort]); //TODO paginate 1 voor tests nog
+        $reviews = $query->paginate(3)->appends(['sort' => $sort]);
 
         return view('rentalProduct.show', compact('product', 'reviews'));
     }

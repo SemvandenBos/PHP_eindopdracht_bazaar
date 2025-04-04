@@ -10,10 +10,13 @@ return [
     'succesCreate' => 'Product succesvol toegevoegd!',
     'moreInfo' => 'Meer info',
     'perDay' => 'per dag',
-    'unavailable' => 'onbeschikbaar',
-    'available' => 'beschikbaar',
+    'unavailable' => 'Morgen onbeschikbaar',
+    'available' => 'Morgen beschikbaar',
     'supplier' => 'leverancier',
     'favourite' => 'favoriet maken',
     'rent' => 'huren',
     'rentedAt' => 'gehuurt op',
+
+    'startDate' => 'Start datum',
+    'endDate' => 'Eind datum',
 ];

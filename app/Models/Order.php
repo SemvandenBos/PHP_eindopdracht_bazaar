@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $fillable = ['user_id', 'rental_product_id', 'rented_at', 'return_due_at'];
+    protected $fillable = ['user_id', 'rental_product_id', 'rent_start_date', 'rent_end_date'];
 
     public function user()
     {

@@ -4,9 +4,9 @@
         @isset($review->reviewer->name)
             <h3 class="font-bold">{{ $review->reviewer->name }}</h3>
         @else
-            <h3 class="font-bold">Anonymous</h3>
+            <h3 class="font-bold">{{__('review.anonymous')}}</h3>
         @endisset
-        <p>★{{ $review->reviewScore }}</p>
+        <p>★{{ $review->review_score }}</p>
     </div>
     <p>{{ $review->review_text }}</p>
 </div>

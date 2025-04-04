@@ -20,7 +20,7 @@ class RentalProductController extends Controller
     {
         $product = RentalProduct::with([
             'orders' => function ($query) {
-                $query->where('rent_start_date', '>', Carbon::now());
+                $query->where('rent_start_date', '>=', Carbon::now());
             }
         ])->findOrFail($id);
 

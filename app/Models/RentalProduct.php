@@ -12,7 +12,7 @@ class RentalProduct extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'price_per_day'];
+    protected $fillable = ['name', 'price_per_day', 'owner_id'];
 
     public function owner()
     {

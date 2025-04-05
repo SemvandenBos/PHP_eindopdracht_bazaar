@@ -9,6 +9,7 @@ use App\Models\RentalProduct;
 use App\Models\RentalProductReview;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
 class RentalProductController extends Controller
@@ -71,7 +72,9 @@ class RentalProductController extends Controller
         }
         $reviews = $query->paginate(3)->appends(['sort' => $sort]);
 
-        return view('rentalProduct.show', compact('product', 'reviews'));
+        $qrcode = QrCode::generate(url('rentalProduct/show/' . $id));
+
+        return view('rentalProduct.show', compact('product', 'reviews', 'qrcode'));
     }
 
     public function create()

@@ -66,6 +66,8 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware('auth', RoleMiddleware::class . ':personal_advertiser')->group(function () {
     Route::get('rentalProduct.create', [RentalProductController::class, 'create'])->name('rentalProduct.create');
     Route::post('rentalProduct.store', [RentalProductController::class, 'store'])->name('rentalProduct.store');
+    Route::post('rentalProduct.storeBulk', [RentalProductController::class, 'storeBulk'])->name('rentalProduct.storeBulk');
+    Route::get('rentalProduct.export', [RentalProductController::class, 'export'])->name('rentalProduct.export');
 });
 
 Route::middleware(['auth'])->group(function () {

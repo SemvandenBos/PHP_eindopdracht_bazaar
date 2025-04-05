@@ -54,7 +54,9 @@ Route::middleware(['auth'])->group(function () {
         'store' => 'rentalProduct.store',
         'show' => 'rentalProduct.show',
     ]);
+    Route::get('activeRentalsOverview', [RentalProductController::class, 'activeRentalsOverview'])->name('rentalProduct/activeRentalsOverview');
 
+    //Order
     Route::get('/order', [OrderController::class, 'index'])->name('order.index');
     Route::post('/order', [OrderController::class, 'store'])->name('order.store');
     Route::post('/orderReview', [OrderController::class, 'storeReview'])->name('order.storeReview');
@@ -62,7 +64,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware('auth', RoleMiddleware::class . ':personal_advertiser')->group(function () {
-    Route::get('advertiserOverview', [RentalProductController::class, 'advertiserOverview'])->name('rentalProduct/advertiserOverview');
     Route::get('rentalProduct.create', [RentalProductController::class, 'create'])->name('rentalProduct.create');
     Route::post('rentalProduct.store', [RentalProductController::class, 'store'])->name('rentalProduct.store');
 });

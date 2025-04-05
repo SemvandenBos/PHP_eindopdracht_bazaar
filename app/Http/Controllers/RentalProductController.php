@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\RentalProduct;
 use App\Models\RentalProductReview;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 
 class RentalProductController extends Controller
@@ -18,18 +19,28 @@ class RentalProductController extends Controller
         return view('rentalProduct.index', ['rentalProducts' => $rentalProducts]);
     }
 
-    public function advertiserOverview()
+    //Overview for both customers and advertisers.
+    public function activeRentalsOverview()
     {
         $user = Auth::user();
 
         $activeRentOrders = Order::with('rentalProduct')
-            ->whereHas('rentalProduct', function ($query) use ($user) {
-                $query->where('owner_id', $user->id);
-            })
+            ->where('user_id', '=', $user->id)
             ->where('rent_start_date', '>=', now())
             ->get();
 
-        return view('rentalProduct.advertiserOverview', compact('activeRentOrders'));
+        if (Gate::denies('advertise', $user)) {
+            return view('rentalProduct.advertiserOverview', compact('activeRentOrders'));
+        }
+
+        $activeOwnedRentOrders = Order::with('rentalProduct')
+            ->whereHas('rentalProduct', function ($query) use ($user) {
+                $query->where('owner_id', $user->id);
+            })
+            ->where('rent_end_date', '>=', now())
+            ->get();
+
+        return view('rentalProduct.advertiserOverview', compact('activeRentOrders', 'activeOwnedRentOrders'));
     }
 
     public function show($id)

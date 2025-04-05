@@ -32,20 +32,6 @@
         </x-card-list>
     @endif
 
-    {{-- @if ($activeRentOrders->isNotEmpty())
-        <x-title>activeRentalOrders</x-title>
-        @foreach ($activeRentOrders as $order)
-            <p>{{ $order->rentalProduct->name }}</p>
-        @endforeach
-    @endif --}}
-
-    {{-- @if ($pastRentOrders->isNotEmpty())
-        <x-title>pastRentalOrders</x-title>
-        @foreach ($pastRentOrders as $order)
-            <p>{{ $order->rentalProduct->name }}</p>
-        @endforeach
-    @endif --}}
-
     @can('advertise', Auth::user())
         <x-card-list :title="__('rentalProduct.activeOwnedRentOrders')" :items='$activeOwnedRentOrders' pageName="ownedPage">
             @foreach ($activeOwnedRentOrders as $order)

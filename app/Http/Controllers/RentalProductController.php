@@ -44,9 +44,9 @@ class RentalProductController extends Controller
                 $query->where('owner_id', $user->id);
             })
             ->where('rent_end_date', '>=', now())
-            ->get();
+            ->paginate(4);
 
-        return view('rentalProduct.activeRentalsOverview', compact('activeRentOrders', 'activeOwnedRentOrders'));
+        return view('rentalProduct.activeRentalsOverview', compact('activeRentOrders', 'pastRentOrders', 'activeOwnedRentOrders'));
     }
 
     public function show($id)

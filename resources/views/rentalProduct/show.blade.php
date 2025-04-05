@@ -42,7 +42,6 @@
                 </x-primary-button>
             </form>
 
-
             <div class="flex flex-col gap-2 mt-5">
                 <x-title>{{ __('rentalProduct.alreadyBookedDates') }}</x-title>
                 @foreach ($product->orders as $order)

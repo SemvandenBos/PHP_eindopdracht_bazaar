@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\Order;
 use App\Models\User;
 use App\Models\RentalProduct;
-use App\Models\RentalProductReview;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class RentalProductReviewSeeder extends Seeder
+class OrderSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,22 +18,18 @@ class RentalProductReviewSeeder extends Seeder
         $users = User::all();
         $products = RentalProduct::all();
 
-        $reviewPairs = [];
-
         foreach ($users as $user) {
-            foreach ($products->random(rand(3, 7)) as $product) {
-                $key = "{$user->id}-{$product->id}";
+            foreach ($products->random(rand(2, 4)) as $product) {
+                $startDate = now()->addDays(rand(-5, 10));
+                $endDate = $startDate->addDays();
 
-                //Force uniqueness of reviews
-                if (!isset($reviewPairs[$key])) {
-                    
-
+                if ($product->available($startDate, $endDate)) {
                     $time = now()->subDays(rand(1, 60));
-                    RentalProductReview::factory()->create([
-                        'reviewer_id' => $user->id,
+                    Order::factory()->create([
+                        'user_id' => $user->id,
                         'rental_product_id' => $product->id,
-                        'created_at' => $time,
-                        'updated_at' => $time,
+                        'rent_start_date' => $startDate,
+                        'rent_end_date' => $endDate,
                     ]);
                 }
             }

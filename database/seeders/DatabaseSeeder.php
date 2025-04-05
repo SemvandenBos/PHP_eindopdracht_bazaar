@@ -27,13 +27,17 @@ class DatabaseSeeder extends Seeder
             'password' => 'asdfasdf',
             'role' => 'personal_advertiser',
         ]);
-        
+
 
         User::factory(10)->create();
         RentalProduct::factory(10)->create();
-    
+
         $this->call([
             RentalProductReviewSeeder::class
+        ]);
+
+        $this->call([
+            OrderSeeder::class
         ]);
     }
 }

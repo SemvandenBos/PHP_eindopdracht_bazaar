@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\RentalProduct;
-use App\Models\RentalProductReview;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -37,7 +36,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            OrderSeeder::class
+            RentalOrderSeeder::class
         ]);
     }
 }

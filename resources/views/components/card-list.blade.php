@@ -1,3 +1,7 @@
+@php
+    $pageName = $pageName ?? 'page';
+@endphp
+
 <div class="m-4 md:m-10">
     @isset($title)
         <x-title class="m-3">{{ $title }}</x-title>
@@ -7,6 +11,6 @@
     </div>
 
     <div class="m-3">
-        {{ $items->links() }}
+        {{ $items->appends(request()->except($pageName))->links() }}
     </div>
 </div>

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use App\Models\Order;
+use App\Models\RentalOrder;
 use App\Models\RentalProduct;
 use App\Models\RentalProductReview;
 use Illuminate\Http\Request;
@@ -43,7 +43,7 @@ class OrderController extends Controller
             return redirect()->back()->with('error', 'This product is currently not available for rent.');
         }
 
-        Order::create([
+        RentalOrder::create([
             'user_id' => $user->id,
             'rental_product_id' => $validated['product_id'],
             'rent_start_date' => $validated['rent_start_date'],

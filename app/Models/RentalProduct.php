@@ -21,7 +21,7 @@ class RentalProduct extends Model
 
     public function orders()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(RentalOrder::class);
     }
 
     public function reviews()

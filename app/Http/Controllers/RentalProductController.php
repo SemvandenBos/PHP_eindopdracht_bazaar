@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
+use App\Models\RentalOrder;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\RentalProduct;
@@ -20,31 +20,31 @@ class RentalProductController extends Controller
         return view('rentalProduct.index', ['rentalProducts' => $rentalProducts]);
     }
 
-    //Overview for both customers and advertisers.
-    public function activeRentalsOverview()
+    //Overview for both customers and advertisers, having both active and history
+    public function rentedOverview()
     {
         $user = Auth::user();
 
-        $activeRentOrders = Order::with('rentalProduct')
+        $activeRentOrders = RentalOrder::with('rentalProduct')
             ->where('user_id', '=', $user->id)
             ->where('rent_end_date', '>=', now())
-            ->get();
+            ->paginate(5, ['*'], 'rentedPage');
 
-        $pastRentOrders = Order::with('rentalProduct')
+        $pastRentOrders = RentalOrder::with('rentalProduct')
             ->where('user_id', '=', $user->id)
             ->where('rent_end_date', '<', now())
-            ->get();
+            ->paginate(5, ['*'], 'pastPage');
 
         if (Gate::denies('advertise', $user)) {
             return view('rentalProduct.activeRentalsOverview', compact('activeRentOrders', 'pastRentOrders'));
         }
 
-        $activeOwnedRentOrders = Order::with('rentalProduct')
+        $activeOwnedRentOrders = RentalOrder::with('rentalProduct')
             ->whereHas('rentalProduct', function ($query) use ($user) {
                 $query->where('owner_id', $user->id);
             })
             ->where('rent_end_date', '>=', now())
-            ->paginate(4);
+            ->paginate(5, ['*'], 'ownedPage');
 
         return view('rentalProduct.activeRentalsOverview', compact('activeRentOrders', 'pastRentOrders', 'activeOwnedRentOrders'));
     }

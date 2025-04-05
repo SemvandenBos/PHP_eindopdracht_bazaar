@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\Order;
+use App\Models\RentalOrder;
 use App\Models\User;
 use App\Models\RentalProduct;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class OrderSeeder extends Seeder
+class RentalOrderSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -25,7 +25,7 @@ class OrderSeeder extends Seeder
 
                 if ($product->available($startDate, $endDate)) {
                     $time = now()->subDays(rand(1, 60));
-                    Order::factory()->create([
+                    RentalOrder::factory()->create([
                         'user_id' => $user->id,
                         'rental_product_id' => $product->id,
                         'rent_start_date' => $startDate,

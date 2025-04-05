@@ -54,7 +54,7 @@ Route::middleware(['auth'])->group(function () {
         'store' => 'rentalProduct.store',
         'show' => 'rentalProduct.show',
     ]);
-    Route::get('activeRentalsOverview', [RentalProductController::class, 'activeRentalsOverview'])->name('rentalProduct/activeRentalsOverview');
+    Route::get('rentedOverview', [RentalProductController::class, 'rentedOverview'])->name('rentalProduct/rentedOverview');
 
     //Order
     Route::get('/order', [OrderController::class, 'index'])->name('order.index');

@@ -26,11 +26,16 @@ class RentalProductController extends Controller
 
         $activeRentOrders = Order::with('rentalProduct')
             ->where('user_id', '=', $user->id)
-            ->where('rent_start_date', '>=', now())
+            ->where('rent_end_date', '>=', now())
+            ->get();
+
+        $pastRentOrders = Order::with('rentalProduct')
+            ->where('user_id', '=', $user->id)
+            ->where('rent_end_date', '<', now())
             ->get();
 
         if (Gate::denies('advertise', $user)) {
-            return view('rentalProduct.advertiserOverview', compact('activeRentOrders'));
+            return view('rentalProduct.activeRentalsOverview', compact('activeRentOrders', 'pastRentOrders'));
         }
 
         $activeOwnedRentOrders = Order::with('rentalProduct')
@@ -40,7 +45,7 @@ class RentalProductController extends Controller
             ->where('rent_end_date', '>=', now())
             ->get();
 
-        return view('rentalProduct.advertiserOverview', compact('activeRentOrders', 'activeOwnedRentOrders'));
+        return view('rentalProduct.activeRentalsOverview', compact('activeRentOrders', 'activeOwnedRentOrders'));
     }
 
     public function show($id)

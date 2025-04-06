@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\AuctionProduct;
 use App\Models\RentalProduct;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -30,6 +31,7 @@ class DatabaseSeeder extends Seeder
 
         User::factory(10)->create();
         RentalProduct::factory(10)->create();
+        AuctionProduct::factory(10)->create();
 
         $this->call([
             RentalProductReviewSeeder::class

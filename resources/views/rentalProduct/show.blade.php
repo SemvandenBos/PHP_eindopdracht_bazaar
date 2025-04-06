@@ -7,8 +7,12 @@
                     <x-availability-sign :available="$product->availableTomorrow()" />
                     ★{{ $product->reviewScore() }}
                 </div>
-                <a href="/todo" class="underline text-blue-600 hover:text-blue-800">{{ __('rentalProduct.supplier') }}:
-                    {{ $product->owner->name }}</a>
+                <div class="flex justify-between">
+                    <a href="/todo"
+                        class="underline text-blue-600 hover:text-blue-800">{{ __('rentalProduct.supplier') }}:
+                        {{ $product->owner->name }}</a>
+                    {{ $qrcode }}
+                </div>
             </x-card>
 
             <x-favourite-button :productId='$product->id' :isActive="Auth::user()->hasFavourite($product)"></x-favourite-button>
@@ -37,7 +41,6 @@
                     {{ __('rentalProduct.rent') }}
                 </x-primary-button>
             </form>
-
 
             <div class="flex flex-col gap-2 mt-5">
                 <x-title>{{ __('rentalProduct.alreadyBookedDates') }}</x-title>

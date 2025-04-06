@@ -20,7 +20,8 @@ class RentalProductFactory extends Factory
         return [
             'name' => fake()->name(),
             'price_per_day' => fake()->numberBetween(10, 100),
-            'owner_id' => User::inRandomOrder()->first()?->id ?? User::factory()
+            'owner_id' => 2,
+            // 'owner_id' => User::inRandomOrder()->first()?->id ?? User::factory()
         ];
     }
 }

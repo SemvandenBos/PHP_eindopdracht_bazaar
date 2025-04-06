@@ -12,9 +12,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -39,14 +39,13 @@ Route::get('/favourites', [FavouritesController::class, 'index'])->name('favouri
 Route::patch('/profile.update-advertiser', [ProfileController::class, 'updateAdvertiser'])->middleware('auth')->name('profile.update-advertiser');
 
 Route::middleware(['auth'])->group(function () {
-    // Route::get('/dashboard', function () {
-    //     return view(view: 'dashboard');
-    // })->name('dashboard');
+    Route::get('/dashboard', function () {
+        return view(view: 'dashboard');
+    })->name('dashboard');
 
-    // Route::get('/personal-advertiser', function () {
-    //     return "Personal Advertiser Dashboard";
-    // })->middleware(RoleMiddleware::class . ':personal_advertiser');
-    // })->name('dashboard');
+    Route::get('/personal-advertiser', function () {
+        return "Personal Advertiser Dashboard";
+    })->middleware(RoleMiddleware::class . ':personal_advertiser')->name('personal-advertiser');
 
     //Rental products
     Route::resource('rentalProduct', RentalProductController::class)->names([
@@ -55,11 +54,42 @@ Route::middleware(['auth'])->group(function () {
         'store' => 'rentalProduct.store',
         'show' => 'rentalProduct.show',
     ]);
+    Route::get('rentedOverview', [RentalProductController::class, 'rentedOverview'])->name('rentalProduct/rentedOverview');
 
+    //Order
+    Route::get('/order', [OrderController::class, 'index'])->name('order.index');
     Route::post('/order', [OrderController::class, 'store'])->name('order.store');
     Route::post('/orderReview', [OrderController::class, 'storeReview'])->name('order.storeReview');
     Route::post('/toggleFavourite', [OrderController::class, 'toggleFavourite'])->name('order.toggleFavourite');
 });
+
+Route::middleware('auth', RoleMiddleware::class . ':personal_advertiser')->group(function () {
+    Route::get('rentalProduct.create', [RentalProductController::class, 'create'])->name('rentalProduct.create');
+    Route::post('rentalProduct.store', [RentalProductController::class, 'store'])->name('rentalProduct.store');
+    Route::post('rentalProduct.storeBulk', [RentalProductController::class, 'storeBulk'])->name('rentalProduct.storeBulk');
+    Route::get('rentalProduct.export', [RentalProductController::class, 'export'])->name('rentalProduct.export');
+});
+
+Route::middleware(['auth'])->group(function () {
+    // Route::get('/dashboard', function () {
+    //     return view(view: 'dashboard');
+    // })->name('dashboard');
+
+    // Route::get('/personal-advertiser', function () {
+    //     return "Personal Advertiser Dashboard";
+    // })->middleware(RoleMiddleware::class . ':personal_advertiser')->name('personal-advertiser');
+
+    Route::resource('rentalProduct', RentalProductController::class)->names([
+        'index' => 'rentalProduct.index',
+        'show' => 'rentalProduct.show',
+    ]);
+
+    Route::get('/order', [OrderController::class, 'index'])->name('order.index'); //TODO
+    Route::post('/order', [OrderController::class, 'store'])->name('order.store');
+    Route::post('/orderReview', [OrderController::class, 'storeReview'])->name('order.storeReview');
+    Route::post('/toggleFavourite', [OrderController::class, 'toggleFavourite'])->name('order.toggleFavourite');
+});
+
 
 
 require __DIR__ . '/auth.php';

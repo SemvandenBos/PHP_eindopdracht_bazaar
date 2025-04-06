@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RentalOrder;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\RentalProduct;
 use App\Models\RentalProductReview;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
 class RentalProductController extends Controller
@@ -14,6 +18,35 @@ class RentalProductController extends Controller
     {
         $rentalProducts = RentalProduct::with('owner')->paginate(5);
         return view('rentalProduct.index', ['rentalProducts' => $rentalProducts]);
+    }
+
+    //Overview for both customers and advertisers, having both active and history
+    public function rentedOverview()
+    {
+        $user = Auth::user();
+
+        $activeRentOrders = RentalOrder::with('rentalProduct')
+            ->where('user_id', '=', $user->id)
+            ->where('rent_end_date', '>=', now())
+            ->paginate(5, ['*'], 'rentedPage');
+
+        $pastRentOrders = RentalOrder::with('rentalProduct')
+            ->where('user_id', '=', $user->id)
+            ->where('rent_end_date', '<', now())
+            ->paginate(5, ['*'], 'pastPage');
+
+        // if (Gate::denies('advertise', $user)) {
+        //     return view('rentalProduct.rentalsOverview', compact('activeRentOrders', 'pastRentOrders'));
+        // }
+
+        $activeOwnedRentOrders = RentalOrder::with('rentalProduct')
+            ->whereHas('rentalProduct', function ($query) use ($user) {
+                $query->where('owner_id', $user->id);
+            })
+            ->where('rent_end_date', '>=', now())
+            ->paginate(5, ['*'], 'ownedPage');
+
+        return view('rentalProduct.rentalsOverview', compact('activeRentOrders', 'pastRentOrders', 'activeOwnedRentOrders'));
     }
 
     public function show($id)
@@ -39,7 +72,9 @@ class RentalProductController extends Controller
         }
         $reviews = $query->paginate(3)->appends(['sort' => $sort]);
 
-        return view('rentalProduct.show', compact('product', 'reviews'));
+        $qrcode = QrCode::generate(url('rentalProduct/show/' . $id));
+
+        return view('rentalProduct.show', compact('product', 'reviews', 'qrcode'));
     }
 
     public function create()
@@ -49,13 +84,66 @@ class RentalProductController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'price_per_day' => 'required|numeric|min:0',
         ]);
 
-        RentalProduct::create($request->all());
+        $user = Auth::user();
+
+        RentalProduct::create([
+            'owner_id' => $user->id,
+            'name' => $validated['name'],
+            'price_per_day' => $validated['price_per_day'],
+        ]);
 
         return redirect()->route('rentalProduct.create')->with('success', __('rentalProduct.succesCreate'));
+    }
+
+    public function storeBulk(Request $request)
+    {
+        $file = $request->file('file');
+        $fileContents = file($file->getPathname());
+
+        foreach ($fileContents as $line) {
+            $data = str_getcsv($line);
+
+            RentalProduct::create([
+                'owner_id' => $data[0],
+                'name' => $data[1],
+                'price_per_day' => $data[2],
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'CSV file imported successfully');
+    }
+
+    public function export()
+    {
+        $fileName = 'rental_products.csv';
+
+        $rentalProducts = RentalProduct::select('owner_id', 'name', 'price_per_day')->get();
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"$fileName\"",
+        ];
+
+        $callback = function () use ($rentalProducts) {
+            $handle = fopen('php://output', 'w');
+            // fputcsv($handle, ['Owner ID', 'Name', 'Price per Day']);
+
+            foreach ($rentalProducts as $product) {
+                fputcsv($handle, [
+                    $product->owner_id,
+                    $product->name,
+                    $product->price_per_day,
+                ]);
+            }
+
+            fclose($handle);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 }

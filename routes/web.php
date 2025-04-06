@@ -4,6 +4,7 @@ use App\Http\Controllers\FavouritesController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RentalProductController;
+use App\Http\Controllers\AuctionProductController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RoleMiddleware;
@@ -37,9 +38,22 @@ Route::middleware(['auth'])->group(function () {
         return "Personal Advertiser Dashboard";
     })->name('personal-advertiser');
 
-    //Rental products
+    //Advertisers routes:
+    Route::middleware(RoleMiddleware::class . ':personal_advertiser')
+        ->group(function () {
+            Route::prefix('/rentalProduct')->name('rentalProduct.')
+                ->controller(RentalProductController::class)
+                ->group(function () {
+                    Route::get('/create', 'create')->name('create');
+                    Route::post('/store', 'store')->name('store');
+                    Route::post('/storeBulk', 'storeBulk')->name('storeBulk');
+                    Route::get('/export', 'export')->name('export');
+                });
+        });
+
+    //Rental products customers
     Route::resource('rentalProduct', RentalProductController::class)
-        ->only(['index', 'show'])
+        // ->only(['index', 'show'])
         ->names([
             'index' => 'rentalProduct.index',
             'show' => 'rentalProduct.show',
@@ -47,19 +61,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('rentedOverview', [RentalProductController::class, 'rentedOverview'])->name('rentalProduct/rentedOverview');
     Route::get('/favourites', [FavouritesController::class, 'index'])->name('favourites');
 
+    //Auction products customers
+    Route::resource('auctionProduct', AuctionProductController::class)
+        ->only(['index', 'show'])
+        ->names([
+            'index' => 'auctionProduct.index',
+            'show' => 'auctionProduct.show',
+        ]);
+
     //Order
     Route::get('/order', [OrderController::class, 'index'])->name('order.index');
     Route::post('/order', [OrderController::class, 'store'])->name('order.store');
     Route::post('/orderReview', [OrderController::class, 'storeReview'])->name('order.storeReview');
     Route::post('/toggleFavourite', [OrderController::class, 'toggleFavourite'])->name('order.toggleFavourite');
-
-    //Advertisers routes:
-    Route::middleware(RoleMiddleware::class . ':personal_advertiser')->group(function () {
-        Route::get('rentalProduct.create', [RentalProductController::class, 'create'])->name('rentalProduct.create');
-        Route::post('rentalProduct.store', [RentalProductController::class, 'store'])->name('rentalProduct.store');
-        Route::post('rentalProduct.storeBulk', [RentalProductController::class, 'storeBulk'])->name('rentalProduct.storeBulk');
-        Route::get('rentalProduct.export', [RentalProductController::class, 'export'])->name('rentalProduct.export');
-    });
 });
 
 

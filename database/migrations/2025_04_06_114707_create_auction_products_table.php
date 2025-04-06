@@ -23,15 +23,12 @@ return new class extends Migration
         });
 
         Schema::create('bids', function (Blueprint $table) {
+            $table->id();
             $table->float('price');
             $table->foreignIdFor(User::class, 'user_id')->constrained()->onDelete('cascade');
             $table->foreignIdFor(AuctionProduct::class, 'auction_product_id')->constrained()->onDelete('cascade');
             $table->timestamps();
-
-            $table->primary(['user_id', 'auction_product_id']);
         });
-
-        
     }
 
     /**

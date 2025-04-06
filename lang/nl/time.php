@@ -7,4 +7,5 @@ return [
 
     'startDate' => 'Start datum',
     'endDate' => 'Eind datum',
+    'timeLeft' => 'Tijd over: ',
 ];

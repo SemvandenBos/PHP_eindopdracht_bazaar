@@ -49,6 +49,15 @@ Route::middleware(['auth'])->group(function () {
                     Route::post('/storeBulk', 'storeBulk')->name('storeBulk');
                     Route::get('/export', 'export')->name('export');
                 });
+
+            Route::prefix('/auctionProduct')->name('auctionProduct.')
+                ->controller(AuctionProductController::class)
+                ->group(function () {
+                    Route::get('/create', 'create')->name('create');
+                    Route::post('/store', 'store')->name('store');
+                    Route::post('/storeBulk', 'storeBulk')->name('storeBulk');
+                    Route::get('/export', 'export')->name('export');
+                });
         });
 
     //Rental products customers
@@ -60,8 +69,6 @@ Route::middleware(['auth'])->group(function () {
         ]);
     Route::get('rentedOverview', [RentalProductController::class, 'rentedOverview'])->name('rentalProduct.rentedOverview');
     Route::get('/favourites', [FavouritesController::class, 'index'])->name('favourites');
-
-
 
     //Auction products customers
     Route::resource('auctionProduct', AuctionProductController::class)

@@ -7,4 +7,5 @@ return [
     
     'startDate' => 'Start date',
     'endDate' => 'End date',
+    'timeLeft' => 'Time left: ',
 ];

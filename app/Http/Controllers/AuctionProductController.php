@@ -2,27 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AuctionProduct;
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class AuctionProductController extends Controller
 {
     public function index()
     {
-        dd("index page");
+        $auctionProducts = AuctionProduct::with('owner')->paginate(5);
+        return view('auctionProduct.index', compact('auctionProducts'));
     }
 
-    public function show()
+    public function show($id)
     {
-        dd("show page");
+        $product = AuctionProduct::with('bids')->findOrFail($id);
+
+        $qrcode = QrCode::generate(url('auctionProduct/show/' . $id));
+
+        return view('auctionProduct.show', compact('product', 'qrcode'));
     }
 
     public function create()
     {
-        dd("create page");
+        return view('auctionProduct.create');
     }
 
     public function store()
     {
-        dd("store page");
+        dd("store auctionproduct");
     }
 }

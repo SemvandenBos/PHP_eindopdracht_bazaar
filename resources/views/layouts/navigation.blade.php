@@ -24,7 +24,9 @@
                     <x-nav-link :href="route('favourites')" :active="request()->routeIs('favourites')">
                         {{ __('rentalProduct.favourites') }}
                     </x-nav-link>
-
+                    <x-nav-link :href="route('auctionProduct.index')" :active="request()->routeIs('auctionProduct.index')">
+                        {{ __('auctionProduct.indexPage') }}
+                    </x-nav-link>
                 </div>
             </div>
 

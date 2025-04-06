@@ -20,6 +20,7 @@ return [
     'rentedAt' => 'rented at',
     'favourites' => 'Favourites',
     'alreadyBookedDates' => 'Already booked dates',
+    'rentedOverview' => 'Rental overview',
     'activeRentOrders' => 'Active rent orders',
     'activeOwnedRentOrders' => 'Active owned rent orders',
 

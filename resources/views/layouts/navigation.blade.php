@@ -18,9 +18,13 @@
                     <x-nav-link :href="route('rentalProduct.index')" :active="request()->routeIs('rentalProduct.index')">
                         {{ __('rentalProduct.name') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('rentalProduct.rentedOverview')" :active="request()->routeIs('rentalProduct.rentedOverview')">
+                        {{ __('rentalProduct.rentedOverview') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('favourites')" :active="request()->routeIs('favourites')">
                         {{ __('rentalProduct.favourites') }}
                     </x-nav-link>
+
                 </div>
             </div>
 

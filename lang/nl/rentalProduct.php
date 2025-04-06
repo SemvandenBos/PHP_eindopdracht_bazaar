@@ -20,6 +20,7 @@ return [
     'rentedAt' => 'gehuurt op',
     'favourites' => 'Favorieten',
     'alreadyBookedDates' => 'Al geboekte data',
+    'rentedOverview' => 'Huuroverzicht',
     'activeRentOrders' => 'Active verhuurorders',
     'activeOwnedRentOrders' => 'Active uitgeleende orders',
 

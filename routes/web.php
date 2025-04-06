@@ -58,10 +58,10 @@ Route::middleware(['auth'])->group(function () {
             'index' => 'rentalProduct.index',
             'show' => 'rentalProduct.show',
         ]);
-    Route::get('rentedOverview', [RentalProductController::class, 'rentedOverview'])->name('rentalProduct/rentedOverview');
+    Route::get('rentedOverview', [RentalProductController::class, 'rentedOverview'])->name('rentalProduct.rentedOverview');
     Route::get('/favourites', [FavouritesController::class, 'index'])->name('favourites');
 
-        
+
 
     //Auction products customers
     Route::resource('auctionProduct', AuctionProductController::class)

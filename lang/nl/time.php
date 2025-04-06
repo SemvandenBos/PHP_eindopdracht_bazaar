@@ -5,4 +5,6 @@ return [
     'from' => 'Van',
     'to' => 'tot',
 
+    'startDate' => 'Start datum',
+    'endDate' => 'Eind datum',
 ];

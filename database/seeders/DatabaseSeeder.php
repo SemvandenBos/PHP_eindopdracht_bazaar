@@ -31,7 +31,10 @@ class DatabaseSeeder extends Seeder
 
         User::factory(10)->create();
         RentalProduct::factory(10)->create();
-        AuctionProduct::factory(10)->create();
+
+        $this->call([
+            AuctionProductSeeder::class
+        ]);
 
         $this->call([
             RentalProductReviewSeeder::class

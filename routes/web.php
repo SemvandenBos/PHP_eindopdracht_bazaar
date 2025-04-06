@@ -53,13 +53,15 @@ Route::middleware(['auth'])->group(function () {
 
     //Rental products customers
     Route::resource('rentalProduct', RentalProductController::class)
-        // ->only(['index', 'show'])
+        ->only(['index', 'show'])
         ->names([
             'index' => 'rentalProduct.index',
             'show' => 'rentalProduct.show',
         ]);
     Route::get('rentedOverview', [RentalProductController::class, 'rentedOverview'])->name('rentalProduct/rentedOverview');
     Route::get('/favourites', [FavouritesController::class, 'index'])->name('favourites');
+
+        
 
     //Auction products customers
     Route::resource('auctionProduct', AuctionProductController::class)

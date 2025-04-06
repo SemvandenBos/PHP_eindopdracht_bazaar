@@ -24,14 +24,14 @@
 
                 {{-- start date --}}
                 <div>
-                    <x-input-label for="rent_start_date" :value="__('rentalProduct.startDate')" />
+                    <x-input-label for="rent_start_date" :value="__('time.startDate')" />
                     <x-date-input id="rent_start_date" name="rent_start_date" :value="old('rent_start_date')" />
                     <x-input-error :messages="$errors->get('rent_start_date')" class="mt-2" />
                 </div>
 
                 {{-- end date --}}
                 <div>
-                    <x-input-label for="rent_end_date" :value="__('rentalProduct.endDate')" />
+                    <x-input-label for="rent_end_date" :value="__('time.endDate')" />
                     <x-date-input id="rent_end_date" name="rent_end_date" :value="old('rent_end_date')" />
                     <x-input-error :messages="$errors->get('rent_end_date')" class="mt-2" />
                 </div>

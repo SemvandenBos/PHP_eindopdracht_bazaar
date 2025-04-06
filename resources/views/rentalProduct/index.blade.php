@@ -1,6 +1,8 @@
 <x-app-layout>
     @can('advertise', Auth::user())
-        <a href="{{ route('rentalProduct.create') }}">CreateAdvertisementTODO</a>
+        <a href="{{ route('rentalProduct.create') }}">
+            <x-card :title="__('rentalProduct.createTitle')" :description="__('rentalProduct.createDescription')"></x-card>
+        </a>
     @endcan
     <x-card-list :items="$rentalProducts">
         @foreach ($rentalProducts as $product)

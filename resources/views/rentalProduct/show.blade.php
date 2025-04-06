@@ -1,4 +1,5 @@
 <x-app-layout>
+    <x-error-success />
     <div class="grid grid-cols-1 md:grid-cols-2 md:mx-[10%]">
         <div class="m-4">
             <x-card title="{{ $product->name }}">
@@ -15,7 +16,6 @@
             </x-card>
 
             <x-favourite-button :productId='$product->id' :isActive="Auth::user()->hasFavourite($product)"></x-favourite-button>
-
             <form method="POST" action="{{ route('order.store') }}">
                 @csrf
                 <x-title>{{ __('rentalProduct.rent') }}</x-title>

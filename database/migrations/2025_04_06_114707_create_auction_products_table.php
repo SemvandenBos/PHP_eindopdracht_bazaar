@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('auction_products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->double('price');
+            $table->double('price')->nullable();
             $table->foreignIdFor(User::class, 'owner_id');
             $table->date('deadline');
             $table->timestamps();

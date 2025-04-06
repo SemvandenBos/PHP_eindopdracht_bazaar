@@ -10,4 +10,5 @@ return [
     'placeBid' => 'Place a bid',
     'price' => 'Price',
     'place' => 'Place',
+    'deadline' => 'deadline',
 ];

@@ -13,7 +13,7 @@ class AuctionProduct extends Model
     /** @use HasFactory<\Database\Factories\AuctionProductFactory> */
     use HasFactory;
 
-    protected $fillable = ['name', 'price', 'deadline'];
+    protected $fillable = ['name', 'price', 'deadline', 'owner_id'];
 
     public function owner()
     {

@@ -10,4 +10,5 @@ return [
     'placeBid' => 'Doe een bod',
     'price' => 'Prijs',
     'place' => 'Plaats',
+    'deadline' => 'deadline',
 ];

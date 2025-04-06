@@ -8,4 +8,9 @@ return [
     'startDate' => 'Start datum',
     'endDate' => 'Eind datum',
     'timeLeft' => 'Tijd over: ',
+
+    'unavailable' => 'Onbeschikbaar',
+    'available' => 'Beschikbaar',
+
+    'tooLate' => 'te laat!',
 ];

@@ -20,6 +20,11 @@ class AuctionProduct extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function available()
+    {
+        return $this->timeLeft()->invert === 0;
+    }
+
     public function bids()
     {
         return $this->hasMany(Bid::class);
@@ -33,7 +38,6 @@ class AuctionProduct extends Model
 
     public function timeLeft()
     {
-        $deadline = $this->deadline;
-        return Carbon::now()->diff($deadline);
+        return Carbon::now()->diff($this->deadline, false);
     }
 }

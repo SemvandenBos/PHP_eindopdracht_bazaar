@@ -7,4 +7,7 @@ return [
     'indexPage' => 'Auctions',
     'highestBid' => 'Highest bid: ',
     'moreInfo' => 'More info',
+    'placeBid' => 'Place a bid',
+    'price' => 'Price',
+    'place' => 'Place',
 ];

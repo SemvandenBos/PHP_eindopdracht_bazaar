@@ -11,8 +11,6 @@ return [
     'succesCreate' => 'Product added succesfully!',
     'moreInfo' => 'More info',
     'perDay' => 'per day',
-    'unavailable' => 'Unavailable tomorrow',
-    'available' => 'Available tomorrow',
     'supplier' => 'supplier',
     'favourite' => 'favourite',
     'favouriteEmpty' => 'You haven\'t yet added any products to your favourite list.',

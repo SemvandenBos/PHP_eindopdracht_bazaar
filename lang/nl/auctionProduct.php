@@ -7,6 +7,7 @@ return [
     'indexPage' => 'Veilingen',
     'highestBid' => 'Hoogste bod: ',
     'moreInfo' => 'Meer informatie',
-    '' => '',
-    '' => '',
+    'placeBid' => 'Doe een bod',
+    'price' => 'Prijs',
+    'place' => 'Plaats',
 ];

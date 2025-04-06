@@ -5,6 +5,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RentalProductController;
 use App\Http\Controllers\AuctionProductController;
+use App\Http\Controllers\BidController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RoleMiddleware;
@@ -70,6 +71,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('rentedOverview', [RentalProductController::class, 'rentedOverview'])->name('rentalProduct.rentedOverview');
     Route::get('/favourites', [FavouritesController::class, 'index'])->name('favourites');
 
+    //Order
+    Route::post('/order', [OrderController::class, 'store'])->name('order.store');
+    Route::post('/orderReview', [OrderController::class, 'storeReview'])->name('order.storeReview');
+    Route::post('/toggleFavourite', [OrderController::class, 'toggleFavourite'])->name('order.toggleFavourite');
+
     //Auction products customers
     Route::resource('auctionProduct', AuctionProductController::class)
         ->only(['index', 'show'])
@@ -78,11 +84,8 @@ Route::middleware(['auth'])->group(function () {
             'show' => 'auctionProduct.show',
         ]);
 
-    //Order
-    Route::get('/order', [OrderController::class, 'index'])->name('order.index');
-    Route::post('/order', [OrderController::class, 'store'])->name('order.store');
-    Route::post('/orderReview', [OrderController::class, 'storeReview'])->name('order.storeReview');
-    Route::post('/toggleFavourite', [OrderController::class, 'toggleFavourite'])->name('order.toggleFavourite');
+    //Bids
+    Route::post('/bid', [BidController::class, 'store'])->name('bid.store');
 });
 
 

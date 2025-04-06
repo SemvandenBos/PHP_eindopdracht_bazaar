@@ -15,7 +15,6 @@
                 <div class="flex justify-between">
                     <x-button-link
                         href="/rentalProduct/{{ $product->id }}">{{ __('rentalProduct.moreInfo') }}</x-button-link>
-                    <x-availability-sign :available="$product->availableTomorrow()" />
                 </div>
             </x-card>
         @endforeach

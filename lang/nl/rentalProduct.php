@@ -11,8 +11,6 @@ return [
     'succesCreate' => 'Product succesvol toegevoegd!',
     'moreInfo' => 'Meer info',
     'perDay' => 'per dag',
-    'unavailable' => 'Morgen onbeschikbaar',
-    'available' => 'Morgen beschikbaar',
     'supplier' => 'leverancier',
     'favourite' => 'favoriet maken',
     'favouriteEmpty' => 'U heeft nog geen producten aan uw favorietenlijst toegevoegd!',

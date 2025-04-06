@@ -4,7 +4,6 @@
             <x-card title="{{ $product->name }}">
                 <p>€{{ $product->price_per_day }} {{ __('rentalProduct.perDay') }}</p>
                 <div class="flex justify-between">
-                    <x-availability-sign :available="$product->availableTomorrow()" />
                     ★{{ $product->reviewScore() }}
                 </div>
                 <div class="flex justify-between">
@@ -19,7 +18,7 @@
 
             <form method="POST" action="{{ route('order.store') }}">
                 @csrf
-                <x-title class="md:text-2xl font-bold">{{ __('rentalProduct.rent') }}</x-title>
+                <x-title>{{ __('rentalProduct.rent') }}</x-title>
                 <input type="hidden" name="product_id" value="{{ $product->id }}" />
 
                 {{-- start date --}}

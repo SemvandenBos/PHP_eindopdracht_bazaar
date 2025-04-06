@@ -11,11 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function index()
-    {
-        dd("orders here");
-    }
-
     public function store(Request $request)
     {
         $validated = $request->validate([

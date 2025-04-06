@@ -8,12 +8,15 @@
         @foreach ($auctionProducts as $product)
             <x-card title="{{ $product->name }}"
                 description="{{ __('auctionProduct.highestBid') }} €{{ $product->highestBid() }}">
-                <div class="flex justify-between">
-                    <p>{{ __('rentalProduct.supplier') }}: {{ $product->owner->name }}</p>
-                </div>
+                <x-auction-time-left :product="$product" />
+
+
+                <p>{{ __('rentalProduct.supplier') }}: {{ $product->owner->name }}</p>
+
                 <div class="flex justify-between">
                     <x-button-link
                         href="/auctionProduct/{{ $product->id }}">{{ __('auctionProduct.moreInfo') }}</x-button-link>
+                    <x-availability-sign :available="$product->available()"></x-availability-sign>
                 </div>
             </x-card>
         @endforeach

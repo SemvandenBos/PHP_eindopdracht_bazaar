@@ -25,6 +25,11 @@ class AuctionProductController extends Controller
         return view('auctionProduct.show', compact('product', 'qrcode'));
     }
 
+    public function history()
+    {
+        dd("history page");
+    }
+
     public function create()
     {
         return view('auctionProduct.create');

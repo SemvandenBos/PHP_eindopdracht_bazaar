@@ -9,6 +9,7 @@ use App\Http\Controllers\BidController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RoleMiddleware;
+use App\Models\RentalProduct;
 
 Route::get('/', function () {
     return view('welcome');
@@ -68,7 +69,9 @@ Route::middleware(['auth'])->group(function () {
             'index' => 'rentalProduct.index',
             'show' => 'rentalProduct.show',
         ]);
+    Route::get('/api/rentalProduct/show/{id}', [RentalProductController::class, 'apiShow']); //TODO JSON
     Route::get('rentedOverview', [RentalProductController::class, 'rentedOverview'])->name('rentalProduct.rentedOverview');
+
     Route::get('/favourites', [FavouritesController::class, 'index'])->name('favourites');
 
     //Order
@@ -77,12 +80,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/toggleFavourite', [OrderController::class, 'toggleFavourite'])->name('order.toggleFavourite');
 
     //Auction products customers
+    Route::get('auctionProduct/history', [AuctionProductController::class, 'history'])->name('auctionProduct.history');
     Route::resource('auctionProduct', AuctionProductController::class)
         ->only(['index', 'show'])
         ->names([
             'index' => 'auctionProduct.index',
             'show' => 'auctionProduct.show',
         ]);
+
 
     //Bids
     Route::post('/bid', [BidController::class, 'store'])->name('bid.store');

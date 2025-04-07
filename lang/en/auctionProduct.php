@@ -11,4 +11,5 @@ return [
     'price' => 'Price',
     'place' => 'Place',
     'deadline' => 'deadline',
+    'history' => 'Buy history',
 ];

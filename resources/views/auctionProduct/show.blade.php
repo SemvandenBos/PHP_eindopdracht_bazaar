@@ -26,7 +26,7 @@
                 <div>
                     <x-input-label for="price" :value="__('auctionProduct.price')" />
                     <x-number-input :min="$product->highestBid()" step="0.01" id="price" name="price" :value="old('price')"
-                        placeholder="€{{ $product->highestBid() + 1 }}" />
+                        placeholder="€{{ $product->highestBid() + 1 }}" :disabled="!$product->available()" />
                     <x-input-error :messages="$errors->get('price')" class="mt-2" />
                 </div>
 

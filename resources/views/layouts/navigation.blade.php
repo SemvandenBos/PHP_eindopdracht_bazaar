@@ -27,6 +27,9 @@
                     <x-nav-link :href="route('auctionProduct.index')" :active="request()->routeIs('auctionProduct.index')">
                         {{ __('auctionProduct.indexPage') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('auctionProduct.history')" :active="request()->routeIs('auctionProduct.history')">
+                        {{ __('auctionProduct.history') }}
+                    </x-nav-link>
                 </div>
             </div>
 

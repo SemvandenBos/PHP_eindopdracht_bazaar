@@ -20,8 +20,6 @@ class AuctionProductFactory extends Factory
             'name' => fake()->name(),
             'price' => fake()->numberBetween(10, 100),
             'deadline' => now()->addDays(rand(-3, 5)),
-            'owner_id' => 2, //TODO, alleen van advertisers maken
-            // 'owner_id' => User::inRandomOrder()->first()?->id ?? User::factory()
         ];
     }
 }

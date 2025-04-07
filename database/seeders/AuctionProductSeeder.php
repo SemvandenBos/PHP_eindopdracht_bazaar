@@ -15,11 +15,17 @@ class AuctionProductSeeder extends Seeder
      */
     public function run(): void
     {
-        $auctionProducts = AuctionProduct::factory(10)->create();
+        $auctionProducts = AuctionProduct::factory()
+            ->count(20)
+            ->make()
+            ->each(function ($product) {
+                $advertisers = User::whereIn('role', ['personal_advertiser', 'business_advertiser'])->get();
+                $product->owner_id = $advertisers->random()->id;
+                $product->save();
+            });
         $users = User::all();
 
         //Unique bids, also only going up in time and price
-        //Maybe todo: cleaner way of making sure that $bidTime is not after the deadline -> basing the rand() from 1 to $timeLeft or something
         foreach ($auctionProducts as $product) {
             $lowestBid = fake()->numberBetween(10, 100);
             $bidTime = $product->deadline->copy()->subHours(48);

@@ -43,20 +43,24 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
         ]);
 
-
         User::factory(10)->create();
-        RentalProduct::factory(10)->create();
+        User::factory(2)->role('personal_advertiser')->create();
+        User::factory(2)->role('business_advertiser')->create();
+
+        $this->call([
+            RentalProductSeeder::class
+        ]);
 
         $this->call([
             AuctionProductSeeder::class
         ]);
 
         $this->call([
-            RentalProductReviewSeeder::class
+            RentalOrderSeeder::class
         ]);
 
         $this->call([
-            RentalOrderSeeder::class
+            RentalProductReviewSeeder::class
         ]);
     }
 }

@@ -1,12 +1,8 @@
 <x-app-layout>
     <div class="flex items-center justify-center min-h-screen bg-gray-100">
         <div class="max-w-md p-6 bg-white shadow-md rounded-lg">
-            @if (session('success'))
-                <div class="mb-4 p-2 text-green-700 bg-green-100 rounded">
-                    {{ session('success') }}
-                </div>
-            @endif
-            <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">{{ __('rentalProduct.createTitle') }}</h2>
+            <x-error-success />
+            <x-title>{{ __('rentalProduct.createTitle') }}</x-title>
             <form action="{{ route('rentalProduct.store') }}" method="POST" class="space-y-4">
                 @csrf
                 <div>

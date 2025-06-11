@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use App\Models\RentalProduct;
 use App\Models\RentalProductReview;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
@@ -145,5 +144,17 @@ class RentalProductController extends Controller
         };
 
         return response()->stream($callback, 200, $headers);
+    }
+
+    //API
+    public function apiShow($id)
+    {
+        $product = RentalProduct::with([
+            'orders' => function ($query) {
+                $query->where('rent_start_date', '>=', Carbon::now());
+            }
+        ])->findOrFail($id);
+
+        return response()->json($product);
     }
 }

@@ -1,6 +1,8 @@
 <x-app-layout>
     @can('advertise', Auth::user())
-        <a href="{{ route('rentalProduct.create') }}">CreateAdvertisementTODO</a>
+        <a href="{{ route('rentalProduct.create') }}">
+            <x-card :title="__('rentalProduct.createTitle')" :description="__('rentalProduct.createDescription')"></x-card>
+        </a>
     @endcan
     <x-card-list :items="$rentalProducts">
         @foreach ($rentalProducts as $product)
@@ -13,7 +15,6 @@
                 <div class="flex justify-between">
                     <x-button-link
                         href="/rentalProduct/{{ $product->id }}">{{ __('rentalProduct.moreInfo') }}</x-button-link>
-                    <x-availability-sign :available="$product->availableTomorrow()" />
                 </div>
             </x-card>
         @endforeach

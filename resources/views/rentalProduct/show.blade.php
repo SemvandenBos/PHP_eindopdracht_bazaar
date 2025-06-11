@@ -1,10 +1,10 @@
 <x-app-layout>
+    <x-error-success />
     <div class="grid grid-cols-1 md:grid-cols-2 md:mx-[10%]">
         <div class="m-4">
             <x-card title="{{ $product->name }}">
                 <p>€{{ $product->price_per_day }} {{ __('rentalProduct.perDay') }}</p>
                 <div class="flex justify-between">
-                    <x-availability-sign :available="$product->availableTomorrow()" />
                     ★{{ $product->reviewScore() }}
                 </div>
                 <div class="flex justify-between">
@@ -16,22 +16,21 @@
             </x-card>
 
             <x-favourite-button :productId='$product->id' :isActive="Auth::user()->hasFavourite($product)"></x-favourite-button>
-
             <form method="POST" action="{{ route('order.store') }}">
                 @csrf
-                <x-title class="md:text-2xl font-bold">{{ __('rentalProduct.rent') }}</x-title>
+                <x-title>{{ __('rentalProduct.rent') }}</x-title>
                 <input type="hidden" name="product_id" value="{{ $product->id }}" />
 
                 {{-- start date --}}
                 <div>
-                    <x-input-label for="rent_start_date" :value="__('rentalProduct.startDate')" />
+                    <x-input-label for="rent_start_date" :value="__('time.startDate')" />
                     <x-date-input id="rent_start_date" name="rent_start_date" :value="old('rent_start_date')" />
                     <x-input-error :messages="$errors->get('rent_start_date')" class="mt-2" />
                 </div>
 
                 {{-- end date --}}
                 <div>
-                    <x-input-label for="rent_end_date" :value="__('rentalProduct.endDate')" />
+                    <x-input-label for="rent_end_date" :value="__('time.endDate')" />
                     <x-date-input id="rent_end_date" name="rent_end_date" :value="old('rent_end_date')" />
                     <x-input-error :messages="$errors->get('rent_end_date')" class="mt-2" />
                 </div>

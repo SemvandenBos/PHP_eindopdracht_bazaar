@@ -1,14 +1,18 @@
 <x-app-layout>
-    <x-card-list :items='$rentalFavourites'>
-        @foreach ($rentalFavourites as $rentalFavourite)
-            <a href="{{ route('rentalProduct.show', $rentalFavourite->id) }}">
-                <x-card :title="$rentalFavourite->name">
-                    <div class="flex justify-between items-center">
-                        <x-favourite-button :productId="$rentalFavourite->id" :isActive="Auth::user()->hasFavourite($rentalFavourite)"></x-favourite-button>
-                        <p>{{ __('rentalProduct.moreInfo') }}</p>
-                    </div>
-                </x-card>
-            </a>
-        @endforeach
-    </x-card-list>
+    @if ($rentalFavourites->isEmpty())
+        <x-title>{{ __('rentalProduct.favouriteEmpty') }}</x-title>
+    @else
+        <x-card-list :items='$rentalFavourites'>
+            @foreach ($rentalFavourites as $rentalFavourite)
+                <a href="{{ route('rentalProduct.show', $rentalFavourite->id) }}">
+                    <x-card :title="$rentalFavourite->name">
+                        <div class="flex justify-between items-center">
+                            <x-favourite-button :productId="$rentalFavourite->id" :isActive="Auth::user()->hasFavourite($rentalFavourite)"></x-favourite-button>
+                            <p>{{ __('rentalProduct.moreInfo') }}</p>
+                        </div>
+                    </x-card>
+                </a>
+            @endforeach
+        </x-card-list>
+    @endif
 </x-app-layout>

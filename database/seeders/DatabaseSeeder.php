@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\AuctionProduct;
 use App\Models\RentalProduct;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -18,6 +19,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
             'password' => 'asdfasdf',
+            'role' => 'user'
         ]);
 
         User::factory()->create([
@@ -27,16 +29,38 @@ class DatabaseSeeder extends Seeder
             'role' => 'personal_advertiser',
         ]);
 
+        User::factory()->create([
+            'name' => 'Test business',
+            'email' => 'business@example.com',
+            'password' => 'asdfasdf',
+            'role' => 'business_advertiser',
+        ]);
+
+        User::factory()->create([
+            'name' => 'Test admin',
+            'email' => 'admin@example.com',
+            'password' => 'asdfasdf',
+            'role' => 'admin',
+        ]);
 
         User::factory(10)->create();
-        RentalProduct::factory(10)->create();
+        User::factory(2)->role('personal_advertiser')->create();
+        User::factory(2)->role('business_advertiser')->create();
 
         $this->call([
-            RentalProductReviewSeeder::class
+            RentalProductSeeder::class
+        ]);
+
+        $this->call([
+            AuctionProductSeeder::class
         ]);
 
         $this->call([
             RentalOrderSeeder::class
+        ]);
+
+        $this->call([
+            RentalProductReviewSeeder::class
         ]);
     }
 }

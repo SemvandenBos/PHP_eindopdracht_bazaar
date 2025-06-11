@@ -3,12 +3,11 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\User;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\RentalProduct>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\AuctionProduct>
  */
-class RentalProductFactory extends Factory
+class AuctionProductFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,8 +17,9 @@ class RentalProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->words(2, true),
-            'price_per_day' => fake()->numberBetween(10, 100),
+            'name' => fake()->name(),
+            'price' => fake()->numberBetween(10, 100),
+            'deadline' => now()->addDays(rand(-3, 5)),
         ];
     }
 }

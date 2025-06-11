@@ -18,8 +18,17 @@
                     <x-nav-link :href="route('rentalProduct.index')" :active="request()->routeIs('rentalProduct.index')">
                         {{ __('rentalProduct.name') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('rentalProduct.rentedOverview')" :active="request()->routeIs('rentalProduct.rentedOverview')">
+                        {{ __('rentalProduct.rentedOverview') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('favourites')" :active="request()->routeIs('favourites')">
                         {{ __('rentalProduct.favourites') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('auctionProduct.index')" :active="request()->routeIs('auctionProduct.index')">
+                        {{ __('auctionProduct.indexPage') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('auctionProduct.history')" :active="request()->routeIs('auctionProduct.history')">
+                        {{ __('auctionProduct.history') }}
                     </x-nav-link>
                 </div>
             </div>

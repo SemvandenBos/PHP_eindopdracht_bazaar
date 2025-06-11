@@ -17,10 +17,15 @@ return [
     'rent' => 'rent',
     'rentedAt' => 'rented at',
     'favourites' => 'Favourites',
+
     'alreadyBookedDates' => 'Already booked dates',
     'rentedOverview' => 'Rental overview',
     'activeRentOrders' => 'Active rent orders',
     'activeOwnedRentOrders' => 'Active owned rent orders',
+    'pastRentOrders' => 'Past rent orders',
+
+    'createBulk' => 'Create bulk',
+    'importCSV' => 'Import CSV',
 
     'deliver' => 'Deliver',
     'collect' => 'Collect',

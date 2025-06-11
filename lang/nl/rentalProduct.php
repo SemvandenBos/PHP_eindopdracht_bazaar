@@ -17,10 +17,15 @@ return [
     'rent' => 'huren',
     'rentedAt' => 'gehuurt op',
     'favourites' => 'Favorieten',
+
     'alreadyBookedDates' => 'Al geboekte data',
     'rentedOverview' => 'Huuroverzicht',
     'activeRentOrders' => 'Active verhuurorders',
     'activeOwnedRentOrders' => 'Active uitgeleende orders',
+    'pastRentOrders' => 'Afgelopen verhuurorders',
+
+    'createBulk' => 'Maak in bulk',
+    'importCSV' => 'Importeer CSV',
 
     'deliver' => 'Afgeven',
     'collect' => 'Ophalen',

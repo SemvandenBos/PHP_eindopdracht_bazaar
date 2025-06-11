@@ -18,7 +18,37 @@ class RentalProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->words(2, true),
+            'name' => fake()->randomElement([
+                'Fast',
+                'Cozy',
+                'Eco',
+                'Compact',
+                'Luxury',
+                'Reliable',
+                'Speedy',
+                'Modern',
+                'Smart',
+                'Urban',
+                'Stylish',
+                'Classic',
+                'Bold',
+                'Clean'
+            ]) . ' ' . fake()->randomElement([
+                'Car',
+                'Bike',
+                'Scooter',
+                'Van',
+                'Motorbike',
+                'Truck',
+                'Electric Bike',
+                'SUV',
+                'Convertible',
+                'eScooter',
+                'Pickup',
+                'Minivan',
+                'Camper',
+                'Jeep'
+            ]),
             'price_per_day' => fake()->numberBetween(10, 100),
         ];
     }

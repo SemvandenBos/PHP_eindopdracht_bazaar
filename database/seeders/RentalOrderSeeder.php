@@ -24,7 +24,6 @@ class RentalOrderSeeder extends Seeder
                 $endDate = $startDate->addDays(rand(0, 2));
 
                 if ($product->available($startDate, $endDate)) {
-                    $time = now()->subDays(rand(1, 60));
                     RentalOrder::factory()->create([
                         'user_id' => $user->id,
                         'rental_product_id' => $product->id,

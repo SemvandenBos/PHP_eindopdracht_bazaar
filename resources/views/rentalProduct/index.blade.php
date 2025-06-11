@@ -1,4 +1,7 @@
 <x-app-layout>
+    <x-slot name="header">
+        <x-title>{{ __('rentalProduct.name') }}</x-title>
+    </x-slot>
     @can('advertise', Auth::user())
         <a href="{{ route('rentalProduct.create') }}">
             <x-card :title="__('rentalProduct.createTitle')" :description="__('rentalProduct.createDescription')"></x-card>

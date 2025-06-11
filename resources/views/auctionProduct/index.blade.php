@@ -1,4 +1,8 @@
 <x-app-layout>
+    <x-slot name="header">
+        <x-title>{{ __('auctionProduct.indexPage') }}</x-title>
+    </x-slot>
+    
     @can('advertise', Auth::user())
         <a href="{{ route('auctionProduct.create') }}">
             <x-card :title="__('auctionProduct.createTitle')" :description="__('auctionProduct.createDescription')"></x-card>

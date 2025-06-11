@@ -1,4 +1,8 @@
 <x-app-layout>
+    <x-slot name="header">
+        <x-title>{{ __('rentalProduct.rentedOverview') }}</x-title>
+    </x-slot>
+
     @if ($activeRentOrders->isNotEmpty())
         <x-card-list :title="__('rentalProduct.activeRentOrders')" :items='$activeRentOrders' pageName="page">
             @foreach ($activeRentOrders as $order)

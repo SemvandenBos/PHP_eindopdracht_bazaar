@@ -2,7 +2,7 @@
 
 return [
     //nl
-    'name' => 'Huurproduct',
+    'name' => 'Huurproducten',
     'createTitle' => 'Voeg een nieuw product voor verhuur toe',
     'createDescription' => 'Klik hier om naar de creatiepagina te navigeren, om een product te verhuren.',
     'productName' => 'Product naam',

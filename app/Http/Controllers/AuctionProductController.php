@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class AuctionProductController extends Controller
 {
@@ -27,7 +28,40 @@ class AuctionProductController extends Controller
 
     public function history()
     {
-        dd("history page");
+        $user = Auth::user();
+
+        // $pastBoughtProducts = AuctionProduct::with(['bids' => function ($query) {
+        //     $query->orderBy('amount', 'desc');
+        // }])->where('deadline', '<', Carbon::now())->get()->filter(function ($product) use ($user) {
+        //     $highestBid = $product->bids->first();
+        //     return $highestBid && $highestBid->user_id === $user->id;
+        // });
+
+        $user = Auth::user();
+        $page = request('page', 1);
+        $perPage = 10;
+
+        $filtered = AuctionProduct::with(['bids' => function ($query) {
+            $query->orderBy('amount', 'desc');
+        }])
+            ->where('deadline', '<', Carbon::now())
+            ->get()
+            ->filter(function ($product) use ($user) {
+                $highestBid = $product->bids->first();
+                return $highestBid && $highestBid->user_id === $user->id;
+            });
+
+        // Manual pagination because of complex query
+        $items = new LengthAwarePaginator(
+            $filtered->forPage($page, $perPage),
+            $filtered->count(),
+            $perPage,
+            $page,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
+        // dd($pastBoughtProducts);
+        return view('auctionProduct.history', ['pastBoughtProducts' => $items]);
     }
 
     public function create()
@@ -37,7 +71,6 @@ class AuctionProductController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $validated = $request->validate([
             'name' => 'required',
             'deadline' => [

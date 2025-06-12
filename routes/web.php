@@ -11,10 +11,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RoleMiddleware;
 use App\Models\RentalProduct;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('set-locale/{locale}', function ($locale) {
     if (in_array($locale, ['en', 'nl'])) {
         App::setLocale($locale);
@@ -26,13 +22,14 @@ Route::get('set-locale/{locale}', function ($locale) {
 Route::patch('/profile.update-advertiser', [ProfileController::class, 'updateAdvertiser'])->middleware('auth')->name('profile.update-advertiser');
 
 Route::middleware(['auth'])->group(function () {
+
     //Account
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::view('/register-advertiser', 'register-advertiser.edit')->name('register-advertiser');
 
-    Route::get('/dashboard', function () {
+    Route::get('/', function () {
         return view(view: 'dashboard');
     })->name('dashboard');
 

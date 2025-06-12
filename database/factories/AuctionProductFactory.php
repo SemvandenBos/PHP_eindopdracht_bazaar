@@ -67,7 +67,7 @@ class AuctionProductFactory extends Factory
                 'Speaker'
             ]),
             'price' => fake()->numberBetween(10, 100),
-            'deadline' => now()->addDays(rand(-3, 5)),
+            'deadline' => now()->addDays(rand(-10, 6)),
         ];
     }
 }

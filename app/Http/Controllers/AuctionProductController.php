@@ -29,29 +29,17 @@ class AuctionProductController extends Controller
     public function history()
     {
         $user = Auth::user();
-
-        // $pastBoughtProducts = AuctionProduct::with(['bids' => function ($query) {
-        //     $query->orderBy('amount', 'desc');
-        // }])->where('deadline', '<', Carbon::now())->get()->filter(function ($product) use ($user) {
-        //     $highestBid = $product->bids->first();
-        //     return $highestBid && $highestBid->user_id === $user->id;
-        // });
-
-        $user = Auth::user();
         $page = request('page', 1);
         $perPage = 10;
 
-        $filtered = AuctionProduct::with(['bids' => function ($query) {
-            $query->orderBy('amount', 'desc');
-        }])
+        $filtered = AuctionProduct::with('bids')
             ->where('deadline', '<', Carbon::now())
             ->get()
             ->filter(function ($product) use ($user) {
-                $highestBid = $product->bids->first();
+                $highestBid = $product->bids->last(); // Last = most recent = highest
                 return $highestBid && $highestBid->user_id === $user->id;
             });
 
-        // Manual pagination because of complex query
         $items = new LengthAwarePaginator(
             $filtered->forPage($page, $perPage),
             $filtered->count(),

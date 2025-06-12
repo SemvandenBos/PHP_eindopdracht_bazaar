@@ -16,7 +16,7 @@ class AuctionProductSeeder extends Seeder
     public function run(): void
     {
         $auctionProducts = AuctionProduct::factory()
-            ->count(20)
+            ->count(100)
             ->make()
             ->each(function ($product) {
                 $advertisers = User::whereIn('role', ['personal_advertiser', 'business_advertiser'])->get();
@@ -30,8 +30,8 @@ class AuctionProductSeeder extends Seeder
             $lowestBid = fake()->numberBetween(10, 100);
             $bidTime = $product->deadline->copy()->subHours(48);
 
-            foreach ($users->random(rand(0, 3)) as $user) {
-                $lowestBid += rand(0, 3);
+            foreach ($users->random(rand(1, 3))->shuffle() as $user) {
+                $lowestBid += rand(1, 3);
                 $bidTime = $bidTime->addHours(rand(1, 10));
 
                 Bid::factory()->create([

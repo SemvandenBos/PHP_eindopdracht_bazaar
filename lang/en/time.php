@@ -8,6 +8,9 @@ return [
     'startDate' => 'Start date',
     'endDate' => 'End date',
     'timeLeft' => 'Time left: ',
+    'oneHourLeft' => 'One hour left',
+    'oneDayLeft' => 'One day left',
+
     'tomorrow' => 'Tomorrow',
 
     'unavailable' => 'Unavailable',

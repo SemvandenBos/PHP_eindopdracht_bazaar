@@ -8,4 +8,5 @@ return [
     'lowestRating' => 'Lowest rating',
 
     'noFilter' => 'No filter',
+    'noSort' => 'No sorting',
 ];

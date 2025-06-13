@@ -11,14 +11,35 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class AuctionProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $sort = request()->query('sort', 'newest');
-        $filter = request()->query('filter', 'noFilter');
+        $sort = $request->query('sort', 'noSort');
+        $filter = $request->query('filter', 'noFilter');
 
         $query = AuctionProduct::with('owner');
 
-        $auctionProducts = AuctionProduct::with('owner')->paginate(5);
+        $now = Carbon::now();
+        if ($filter === 'available') {
+            $query->where('deadline', '>', $now);
+        } elseif ($filter === 'oneHourLeft') {
+            $query->whereBetween('deadline', [$now, $now->copy()->addHour()]);
+        } elseif ($filter === 'oneDayLeft') {
+            $query->whereBetween('deadline', [$now, $now->copy()->addDay()]);
+        }
+
+        if ($sort === 'highestBid') {
+            $query->withMax('bids', 'price')->orderByDesc('bids_max_price');
+        } elseif ($sort === 'lowestBid') {
+            $query->withMax('bids', 'price')->orderBy('bids_max_price');
+        } else {
+            $query->orderBy('deadline');
+        }
+
+        $auctionProducts = $query->paginate(5)->appends([
+            'sort' => $sort,
+            'filter' => $filter,
+        ]);
+
         return view('auctionProduct.index', compact('auctionProducts'));
     }
 

@@ -18,7 +18,8 @@
         $filterOptions = [
             'noFilter' => __('sorting.noFilter'),
             'available' => __('time.available'),
-            'unavailable' => __('time.unavailable'),
+            'oneHourLeft' => __('time.oneHourLeft'),
+            'oneDayLeft' => __('time.oneDayLeft'),
         ];
     @endphp
 

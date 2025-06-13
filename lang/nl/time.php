@@ -8,6 +8,9 @@ return [
     'startDate' => 'Start datum',
     'endDate' => 'Eind datum',
     'timeLeft' => 'Tijd over: ',
+    'oneHourLeft' => 'Een uur over',
+    'oneDayLeft' => 'Een dag over',
+
     'tomorrow' => 'Morgen',
 
     'unavailable' => 'Onbeschikbaar',

@@ -66,7 +66,6 @@ Route::middleware(['auth'])->group(function () {
             'index' => 'rentalProduct.index',
             'show' => 'rentalProduct.show',
         ]);
-    Route::get('/api/rentalProduct/show/{id}', [RentalProductController::class, 'apiShow']); //TODO JSON
     Route::get('rentedOverview', [RentalProductController::class, 'rentedOverview'])->name('rentalProduct.rentedOverview');
 
     Route::get('/favourites', [FavouritesController::class, 'index'])->name('favourites');

@@ -2,16 +2,30 @@
     <x-slot name="header">
         <x-title>{{ __('auctionProduct.indexPage') }}</x-title>
     </x-slot>
-    
+
     @can('advertise', Auth::user())
         <a href="{{ route('auctionProduct.create') }}">
             <x-card :title="__('auctionProduct.createTitle')" :description="__('auctionProduct.createDescription')"></x-card>
         </a>
     @endcan
-    <x-card-list :items="$auctionProducts">
+
+    @php
+        $sortOptions = [
+            'noSort' => __('sorting.noSort'),
+            'highestBid' => __('auctionProduct.highestBid'),
+            'lowestBid' => __('auctionProduct.lowestBid'),
+        ];
+        $filterOptions = [
+            'noFilter' => __('sorting.noFilter'),
+            'available' => __('time.available'),
+            'unavailable' => __('time.unavailable'),
+        ];
+    @endphp
+
+    <x-card-list :items="$auctionProducts" :sort-options="$sortOptions" :filter-options="$filterOptions">
         @foreach ($auctionProducts as $product)
             <x-card title="{{ $product->name }}"
-                description="{{ __('auctionProduct.highestBid') }} €{{ $product->highestBid() }}">
+                description="{{ __('auctionProduct.highestBid') }}: €{{ $product->highestBid() }}">
                 <x-auction-time-left :product="$product" />
 
 

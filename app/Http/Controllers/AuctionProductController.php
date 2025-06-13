@@ -13,6 +13,11 @@ class AuctionProductController extends Controller
 {
     public function index()
     {
+        $sort = request()->query('sort', 'newest');
+        $filter = request()->query('filter', 'noFilter');
+
+        $query = AuctionProduct::with('owner');
+
         $auctionProducts = AuctionProduct::with('owner')->paginate(5);
         return view('auctionProduct.index', compact('auctionProducts'));
     }

@@ -3,7 +3,7 @@
         <div class="m-4">
 
             <x-card title="{{ $product->name }}">
-                <p>{{ __('auctionProduct.highestBid') }} €{{ $product->highestBid() }}</p>
+                <p>{{ __('auctionProduct.highestBid') }}: €{{ $product->highestBid() }}</p>
                 <div class="flex justify-between">
                     <x-auction-time-left :product="$product" />
                 </div>

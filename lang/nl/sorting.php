@@ -6,4 +6,6 @@ return [
     'oldest' => 'Oud',
     'highestRating' => 'Best beoordeeld',
     'lowestRating' => 'Slechtst beoordeeld',
+
+    'noFilter' => 'Geen filter',
 ];

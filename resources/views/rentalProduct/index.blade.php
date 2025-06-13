@@ -7,7 +7,20 @@
             <x-card :title="__('rentalProduct.createTitle')" :description="__('rentalProduct.createDescription')"></x-card>
         </a>
     @endcan
-    <x-card-list :items="$rentalProducts">
+
+    @php
+        $sortOptions = [
+            'newest' => __('sorting.newest'),
+            'oldest' => __('sorting.oldest'),
+            'highest_rating' => __('sorting.highestRating'),
+            'lowest_rating' => __('sorting.lowestRating'),
+        ];
+        $filterOptions = [
+            'noFilter' => __('sorting.noFilter'),
+            'available' => __('time.tomorrow') . ' ' . __('time.available'),
+        ];
+    @endphp
+    <x-card-list :items="$rentalProducts" :sort-options="$sortOptions" :filter-options="$filterOptions">
         @foreach ($rentalProducts as $product)
             <x-card title="{{ $product->name }}"
                 description="€{{ $product->price_per_day }} {{ __('rentalProduct.perDay') }}">

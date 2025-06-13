@@ -15,8 +15,40 @@ class RentalProductController extends Controller
 {
     public function index()
     {
-        $rentalProducts = RentalProduct::with('owner')->paginate(5);
-        return view('rentalProduct.index', ['rentalProducts' => $rentalProducts]);
+        $sort = request()->query('sort', 'newest');
+        $filter = request()->query('filter', 'noFilter');
+
+        $query = RentalProduct::with('owner');
+
+        if ($sort === 'oldest') {
+            $query->orderBy('created_at', 'asc');
+        } elseif ($sort === 'highest_rating') {
+            $query->withAvg('reviews', 'review_score')->orderBy('reviews_avg_review_score', 'desc');
+        } elseif ($sort === 'lowest_rating') {
+            $query->withAvg('reviews', 'review_score')->orderBy('reviews_avg_review_score', 'asc');
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        $products = $query->get(); // no pagination yet (still need to filter)
+
+        if ($filter === 'available') {
+            $products = $products->filter(fn($product) => $product->availableTomorrow());
+        } elseif ($filter === 'unavailable') {
+            $products = $products->filter(fn($product) => !$product->availableTomorrow());
+        }
+
+        $perPage = 5;
+        $page = request()->get('page', 1);
+        $paginated = new \Illuminate\Pagination\LengthAwarePaginator(
+            $products->forPage($page, $perPage),
+            $products->count(),
+            $perPage,
+            $page,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
+        return view('rentalProduct.index', ['rentalProducts' => $paginated]);
     }
 
     //Overview for both customers and advertisers, having both active and history
@@ -57,8 +89,15 @@ class RentalProductController extends Controller
         ])->findOrFail($id);
 
         $sort = request()->query('sort', 'newest');
+        $filter = request()->query('filter', 'all');
 
         $query = RentalProductReview::where('rental_product_id', $product->id);
+
+        if ($filter === 'past_week') {
+            $query->where('created_at', '>=', Carbon::now()->subWeek());
+        } elseif ($filter === 'past_month') {
+            $query->where('created_at', '>=', Carbon::now()->subMonth());
+        }
 
         if ($sort === 'oldest') {
             $query->orderBy('created_at', 'asc');
@@ -69,7 +108,10 @@ class RentalProductController extends Controller
         } else {
             $query->orderBy('created_at', 'desc');
         }
-        $reviews = $query->paginate(3)->appends(['sort' => $sort]);
+        $reviews = $query->paginate(3)->appends([
+            'sort' => $sort,
+            'filter' => $filter,
+        ]);
 
         $qrcode = QrCode::generate(url('rentalProduct/show/' . $id));
 

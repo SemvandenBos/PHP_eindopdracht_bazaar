@@ -8,4 +8,6 @@ return [
     'score' => 'Score',
     'postReview' => 'Post review',
     'anonymous' => 'Anonymous',
+
+    'emptyState' => 'No matching reviews found'
 ];

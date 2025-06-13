@@ -8,4 +8,6 @@ return [
     'score' => 'Score',
     'postReview' => 'Beoordeling plaatsen',
     'anonymous' => 'Anoniem',
+
+    'emptyState' => 'Geen beoordelingen gevonden'
 ];

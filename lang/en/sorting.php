@@ -6,4 +6,6 @@ return [
     'oldest' => 'Oldest',
     'highestRating' => 'highest rating',
     'lowestRating' => 'Lowest rating',
+
+    'noFilter' => 'No filter',
 ];

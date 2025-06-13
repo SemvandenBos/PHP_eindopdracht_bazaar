@@ -15,25 +15,27 @@
                 </div>
             </x-card>
 
-            <form method="POST" action="{{ route('bid.store') }}">
-                @csrf
+            @if ($product->available())
+                <form method="POST" action="{{ route('bid.store') }}">
+                    @csrf
 
-                <x-title>{{ __('auctionProduct.placeBid') }}</x-title>
-                <x-error-success />
-                <input type="hidden" name="product_id" value="{{ $product->id }}" />
+                    <x-title>{{ __('auctionProduct.placeBid') }}</x-title>
+                    <x-error-success />
+                    <input type="hidden" name="product_id" value="{{ $product->id }}" />
 
-                {{-- bid value --}}
-                <div>
-                    <x-input-label for="price" :value="__('auctionProduct.price')" />
-                    <x-number-input :min="$product->highestBid()" step="0.01" id="price" name="price" :value="old('price')"
-                        placeholder="€{{ $product->highestBid() + 1 }}" :disabled="!$product->available()" />
-                    <x-input-error :messages="$errors->get('price')" class="mt-2" />
-                </div>
+                    {{-- bid value --}}
+                    <div>
+                        <x-input-label for="price" :value="__('auctionProduct.price')" />
+                        <x-number-input :min="$product->highestBid()" step="0.01" id="price" name="price" :value="old('price')"
+                            placeholder="€{{ $product->highestBid() + 1 }}" :disabled="!$product->available()" />
+                        <x-input-error :messages="$errors->get('price')" class="mt-2" />
+                    </div>
 
-                <x-primary-button>
-                    {{ __('auctionProduct.place') }}
-                </x-primary-button>
-            </form>
+                    <x-primary-button>
+                        {{ __('auctionProduct.place') }}
+                    </x-primary-button>
+                </form>
+            @endif
         </div>
         <div>
         </div>

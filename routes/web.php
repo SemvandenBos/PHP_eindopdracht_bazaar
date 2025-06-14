@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdvertiserController;
 use App\Http\Controllers\FavouritesController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
@@ -87,6 +88,10 @@ Route::middleware(['auth'])->group(function () {
 
     //Bids
     Route::post('/bid', [BidController::class, 'store'])->name('bid.store');
+
+    //Advertiser pages
+    Route::get('advertiser', [AdvertiserController::class, 'index'])->name('advertiser.index');
+    Route::get('advertiser/{advertiserName}', [AdvertiserController::class, 'show'])->name('advertiser.show');
 });
 
 

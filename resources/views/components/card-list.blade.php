@@ -1,5 +1,6 @@
 @php
     $pageName = $pageName ?? 'page';
+    $sortingId = $sortingId ?? '';
 @endphp
 
 <div class="m-4 md:m-10">
@@ -10,8 +11,8 @@
     @if (!empty($sortOptions))
         <div class="flex gap-2 m-3">
             @foreach ($sortOptions as $key => $label)
-                <a href="{{ request()->fullUrlWithQuery(['sort' => $key]) }}"
-                    class="{{ request('sort') === $key ? 'font-bold underline' : '' }}">
+                <a href="{{ request()->fullUrlWithQuery(['sort' . $sortingId => $key]) }}"
+                    class="{{ request('sort' . $sortingId) === $key ? 'font-bold underline' : '' }}">
                     {{ $label }}
                 </a>
                 @if (!$loop->last)
@@ -24,8 +25,8 @@
     @if (!empty($filterOptions))
         <div class="flex gap-2 m-3">
             @foreach ($filterOptions as $key => $label)
-                <a href="{{ request()->fullUrlWithQuery(['filter' => $key]) }}"
-                    class="{{ request('filter') === $key ? 'font-bold underline' : '' }}">
+                <a href="{{ request()->fullUrlWithQuery(['filter' . $sortingId => $key]) }}"
+                    class="{{ request('filter' . $sortingId) === $key ? 'font-bold underline' : '' }}">
                     {{ $label }}
                 </a>
                 @if (!$loop->last)

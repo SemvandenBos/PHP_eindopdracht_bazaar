@@ -6,7 +6,9 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RentalProductController;
 use App\Http\Controllers\AuctionProductController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BidController;
+use App\Models\PurchasableProduct;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RoleMiddleware;
@@ -30,9 +32,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::view('/register-advertiser', 'register-advertiser.edit')->name('register-advertiser');
 
-    Route::get('/', function () {
-        return view(view: 'dashboard');
-    })->name('dashboard');
+    
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/personal-advertiser', function () {
         return "Personal Advertiser Dashboard";

@@ -8,7 +8,7 @@
                     ★{{ $product->reviewScore() }}
                 </div>
                 <div class="flex justify-between">
-                    <a href="/todo"
+                    <a href="{{ route('advertiser.show', ['advertiserName' => $product->owner->name]) }}"
                         class="underline text-blue-600 hover:text-blue-800">{{ __('rentalProduct.supplier') }}:
                         {{ $product->owner->name }}</a>
                     {{ $qrcode }}

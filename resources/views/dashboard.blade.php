@@ -29,19 +29,6 @@
                         </form>
                     </div>
 
-                    @can('advertise', Auth::user())
-                        <div class="mb-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <a href="{{ route('product.create') }}">
-                                <x-card :title="__('product.createTitle')"
-                                    :description="__('product.createDescription')"></x-card>
-                            </a>
-                            <a href="{{ route('rentalProduct.create') }}">
-                                <x-card :title="__('rentalProduct.createTitle')"
-                                    :description="__('rentalProduct.createDescription')"></x-card>
-                            </a>
-                        </div>
-                    @endcan
-
                     <!-- Regular Products Section -->
                     <div class="mb-12">
                         <h3 class="text-lg font-medium mb-4">{{ __('Products') }}</h3>
